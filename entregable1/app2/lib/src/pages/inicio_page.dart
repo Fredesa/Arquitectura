@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app2/src/pages/menu_page.dart';
 import 'package:flutter/material.dart';
 
 class inicioPage extends StatefulWidget {
@@ -63,9 +64,10 @@ class _inicioPageState extends State<inicioPage> {
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('Ingresar'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
+                  child: Text('Ingresar'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'menu');
+                  }),
             ],
           );
         });
@@ -103,7 +105,9 @@ class _inicioPageState extends State<inicioPage> {
         icon: Icon(Icons.lock),
       ),
       onChanged: (valor) {
-        setState(() {});
+        setState(() {
+          _password = valor;
+        });
       },
     );
   }
