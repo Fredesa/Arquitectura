@@ -1,4 +1,3 @@
-import 'package:componentes/src/pages/Home_page.dart';
 import 'package:componentes/src/pages/alert_page.dart';
 import 'package:componentes/src/routers/routes.dart';
 //import 'package:componentes/src/pages/home_temp.dart';
