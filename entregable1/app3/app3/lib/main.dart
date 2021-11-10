@@ -15,9 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Email And Password Login',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );

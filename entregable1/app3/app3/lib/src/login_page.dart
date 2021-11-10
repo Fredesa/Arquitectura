@@ -34,12 +34,12 @@ class _LoginScreenState extends State<LoginPage> {
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
           if (value!.isEmpty) {
-            return ("Please Enter Your Email");
+            return ("Por favor ingresa tu correo");
           }
           // reg expression for email validation
           if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
               .hasMatch(value)) {
-            return ("Please Enter a valid email");
+            return ("Por favor ingresa un correo valido");
           }
           return null;
         },
@@ -50,7 +50,11 @@ class _LoginScreenState extends State<LoginPage> {
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.mail),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
+          hintText: "Correo",
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepPurple, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -64,10 +68,10 @@ class _LoginScreenState extends State<LoginPage> {
         validator: (value) {
           RegExp regex = new RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
-            return ("Password is required for login");
+            return ("La contraseña es requerida para el ingreso");
           }
           if (!regex.hasMatch(value)) {
-            return ("Enter Valid Password(Min. 6 Character)");
+            return ("Ingresa una contraseña valida (Min. 6 Caracteres)");
           }
         },
         onSaved: (value) {
@@ -75,9 +79,14 @@ class _LoginScreenState extends State<LoginPage> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
+          errorStyle: TextStyle(color: Colors.deepPurple),
           prefixIcon: Icon(Icons.vpn_key),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
+          hintText: "Contraseña",
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepPurple, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -94,7 +103,7 @@ class _LoginScreenState extends State<LoginPage> {
             signIn(emailController.text, passwordController.text);
           },
           child: Text(
-            "Login",
+            "Ingresar",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -133,7 +142,7 @@ class _LoginScreenState extends State<LoginPage> {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Don't have an account? "),
+                          Text("No tienes una cuenta? "),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -142,7 +151,7 @@ class _LoginScreenState extends State<LoginPage> {
                                       builder: (context) => SignInPage()));
                             },
                             child: Text(
-                              "SignUp",
+                              "Registrate",
                               style: TextStyle(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold,
@@ -167,18 +176,18 @@ class _LoginScreenState extends State<LoginPage> {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
+                  Fluttertoast.showToast(msg: "Ingreso Satisfactorio"),
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => HomePage())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
+            errorMessage = "Tu correo parece ser incorrecto.";
 
             break;
           case "wrong-password":
-            errorMessage = "Your password is wrong.";
+            errorMessage = "Tu contraseña es incorrecta.";
             break;
           case "user-not-found":
             errorMessage = "User with this email doesn't exist.";
