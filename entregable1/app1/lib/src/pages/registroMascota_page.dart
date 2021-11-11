@@ -4,40 +4,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class registroCompletoPage extends StatefulWidget {
+class registroMascotaPage extends StatefulWidget {
   @override
-  _registroCompletoPageState createState() => _registroCompletoPageState();
-  static final String routeName = 'registroCompleto';
+  _registroMascotaPageState createState() => _registroMascotaPageState();
+  static final String routeName = 'registroMascota';
 }
 
-class _registroCompletoPageState extends State<registroCompletoPage> {
+class _registroMascotaPageState extends State<registroMascotaPage> {
   final picker = ImagePicker();
   var pickedFile;
 
-  String _barrio = "Managua";
-  String _horaInicio = "";
-  String _horaFinal = "";
+  String _nombre = "";
+  String _edad = "";
   String _raza = "Affenpinscher";
-  String _actividad = "Paseo";
+  String _caracter = "Docil";
+  String _afeccion = "";
 
-  List<String> _listaActividad = [
-    "Paseo",
-    "Correr",
-    "Entrenar",
-    "Fuerte actividad fisica",
-    "Natacion",
-    "Juguetes",
-  ];
-  List<String> _listaBarrio = [
-    "Managua",
-    "Minuto de Dios",
-    "2o de Julio",
-    "Country Sur",
-    "Candelaria",
-    "Santa fe",
-    "Las cruces",
-    "Salitre"
-  ];
   List<String> _listaRazas = [
     "Affenpinscher",
     "Airedale terrier",
@@ -335,24 +317,33 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Completar Registro Cuidador'),
+          title: Text('Registro Mascota'),
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
           child: Column(
             children: [
               SizedBox(height: size.height * 0.05),
-              _inputBarrio(),
+              _inputNombre(),
               SizedBox(height: size.height * 0.05),
-              _inputHoraInicio(),
-              SizedBox(height: size.height * 0.05),
-              _inputHoraFinal(),
+              _inputEdad(),
               SizedBox(height: size.height * 0.05),
               _inputRaza(),
               SizedBox(height: size.height * 0.05),
-              _inputActividad(),
+              _inputCaracter(),
               SizedBox(height: size.height * 0.05),
-              Text('Ingresar una foto tuya'),
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                        "Si posee alguna afeccion fisica escribela a continuacion"),
+                    SizedBox(height: size.height * 0.02),
+                    _inputEstado(),
+                  ],
+                ),
+              ),
+              SizedBox(height: size.height * 0.05),
+              Text('Ingresar una foto de tu mascota'),
               SizedBox(height: size.height * 0.02),
               _inputImagen(),
               SizedBox(height: size.height * 0.05),
@@ -369,10 +360,10 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20))),
                     child: Text(
-                      'Completar Registro',
+                      'Registrarte',
                       style: TextStyle(fontSize: 24),
                     ),
-                    onPressed: () => _inputFormularioCompleto(),
+                    onPressed: () => _inputMascota(),
                   ),
                 ),
               )
@@ -406,109 +397,13 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
     );
   }
 
-  Widget _inputBarrio() {
-    return Center(
-        child: SizedBox(
-      width: 380,
-      child: Column(children: <Widget>[
-        InputDecorator(
-          decoration: InputDecoration(
-            labelStyle: TextStyle(
-              color: Colors.orange[900],
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            hintText: 'Barrio',
-            labelText: 'Barrio donde trabajaras',
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton(
-              value: _barrio,
-              items: getOpcionesBarrio(),
-              onChanged: (opci) {
-                setState(() {
-                  _barrio = opci.toString();
-                });
-              },
-            ),
-          ),
-        )
-      ]),
-    ));
-  }
-
-  List<DropdownMenuItem<String>> getOpcionesBarrio() {
-    List<DropdownMenuItem<String>> lista = [];
-    _listaBarrio.forEach((barrio) {
-      lista.add(DropdownMenuItem(
-        child: Text(barrio),
-        value: barrio,
-      ));
-    });
-    return lista;
-  }
-
-  Widget _inputActividad() {
-    return Center(
-        child: SizedBox(
-      width: 380,
-      child: Column(children: <Widget>[
-        InputDecorator(
-          decoration: InputDecoration(
-            labelStyle: TextStyle(
-              color: Colors.orange[900],
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            hintText: 'Actividad',
-            labelText: 'Actividades que realiza',
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton(
-              value: _actividad,
-              items: getOpcionesActividad(),
-              onChanged: (opci) {
-                setState(() {
-                  _actividad = opci.toString();
-                });
-              },
-            ),
-          ),
-        )
-      ]),
-    ));
-  }
-
-  List<DropdownMenuItem<String>> getOpcionesActividad() {
-    List<DropdownMenuItem<String>> lista = [];
-    _listaActividad.forEach((actividad) {
-      lista.add(DropdownMenuItem(
-        child: Text(actividad),
-        value: actividad,
-      ));
-    });
-    return lista;
-  }
-
-  Widget _inputHoraInicio() {
+  Widget _inputNombre() {
     return Center(
         child: SizedBox(
             width: 300,
             child: TextField(
               autofocus: true,
-              keyboardType: TextInputType.number,
+              textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -521,24 +416,25 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
                   borderSide: BorderSide(color: Colors.orange),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                hintText: '00:00',
-                labelText: 'Hora de Inicio',
+                hintText: 'Nombre de la Mascota',
+                labelText: 'Nombre de la Mascota',
+                icon: Icon(Icons.pets, color: Colors.orange[900]),
               ),
               onChanged: (valor) {
                 setState(() {
-                  _horaInicio = valor;
+                  _nombre = valor;
                 });
               },
             )));
   }
 
-  Widget _inputHoraFinal() {
+  Widget _inputEstado() {
     return Center(
         child: SizedBox(
             width: 300,
             child: TextField(
               autofocus: true,
-              keyboardType: TextInputType.number,
+              textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -551,18 +447,50 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
                   borderSide: BorderSide(color: Colors.orange),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                hintText: '00:00',
-                labelText: 'Hora de Finalizacion',
+                hintText: 'Afeccion fisica ',
+                labelText: 'Afeccion Fisica',
+                icon: Icon(Icons.pets, color: Colors.orange[900]),
               ),
               onChanged: (valor) {
                 setState(() {
-                  _horaFinal = valor;
+                  _afeccion = valor;
                 });
               },
             )));
   }
 
-  _inputFormularioCompleto() {
+  Widget _inputEdad() {
+    return Center(
+        child: SizedBox(
+            width: 300,
+            child: TextField(
+              autofocus: true,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelStyle: TextStyle(
+                  color: Colors.orange[900],
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.orange),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.orange),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                hintText: 'Edad',
+                labelText: 'Edad de la Mascota',
+                icon: Icon(Icons.phone, color: Colors.orange[900]),
+              ),
+              onChanged: (valor) {
+                setState(() {
+                  _edad = valor;
+                });
+              },
+            )));
+  }
+
+  _inputMascota() {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -575,21 +503,21 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text('Datos'),
-                Text('El barrio en que trabajas es : $_barrio'),
-                Text('Tu hora de Inicio es : $_horaInicio'),
-                Text('Tu hora de Cierre es : $_horaFinal'),
-                Text('Las razas que manejas son : $_raza'),
-                Text('Las actividades que realizas son : $_actividad'),
+                Text('El nombre de la mascota es : $_nombre'),
+                Text('La edad de la mascota es : $_edad'),
+                Text('La raza de tu mascota es : $_raza'),
+                Text('El caracter de la mascota es : $_caracter'),
+                Text('Las afecciones de tu mascota son es : $_afeccion')
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
                 style: TextButton.styleFrom(primary: Colors.orange[900]),
-                child: Text('Completar Registro'),
+                child: Text('Registrarse'),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'confirmacion');
+                  Navigator.pushNamed(context, 'recorrido');
                 }),
           ],
         );
@@ -635,12 +563,61 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
     ));
   }
 
+  Widget _inputCaracter() {
+    return Center(
+        child: SizedBox(
+      width: 380,
+      child: Column(children: <Widget>[
+        InputDecorator(
+          decoration: InputDecoration(
+            labelStyle: TextStyle(
+              color: Colors.orange[900],
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.orange),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.orange),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            hintText: 'Caracter de tu mascota',
+            labelText: 'Caracter',
+            icon: Icon(Icons.select_all, color: Colors.orange[900]),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              value: _caracter,
+              items: getOpcionesCaracter(),
+              onChanged: (opci) {
+                setState(() {
+                  _caracter = opci.toString();
+                });
+              },
+            ),
+          ),
+        )
+      ]),
+    ));
+  }
+
   List<DropdownMenuItem<String>> getOpcionesRazas() {
     List<DropdownMenuItem<String>> lista = [];
     _listaRazas.forEach((raza) {
       lista.add(DropdownMenuItem(
         child: Text(raza),
         value: raza,
+      ));
+    });
+    return lista;
+  }
+
+  List<DropdownMenuItem<String>> getOpcionesCaracter() {
+    List<DropdownMenuItem<String>> lista = [];
+    _listaCaracter.forEach((caracter) {
+      lista.add(DropdownMenuItem(
+        child: Text(caracter),
+        value: caracter,
       ));
     });
     return lista;
