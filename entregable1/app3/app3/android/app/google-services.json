@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "778946389532",
+    "project_id": "recordmed-a7c06",
+    "storage_bucket": "recordmed-a7c06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778946389532:android:e7a26c1f0761dca3c721d9",
+        "android_client_info": {
+          "package_name": "com.ucentral.app3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778946389532-jdedcv295huocp1j5eejh1aibcfh6msb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE-dcTYCgA_qoeCBSpMxCiOg9gl0CRGD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778946389532-jdedcv295huocp1j5eejh1aibcfh6msb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

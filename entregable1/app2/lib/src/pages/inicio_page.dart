@@ -16,10 +16,13 @@ class _inicioPageState extends State<inicioPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
+    return Container(
+      
+      child: SingleChildScrollView(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+
         SizedBox(height: size.height * 0.05),
         Image(
           image: NetworkImage('https://i.ibb.co/ZSnQ8Hr/WALKDOG-1.png'),
