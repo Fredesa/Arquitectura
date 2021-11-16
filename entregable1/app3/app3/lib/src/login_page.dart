@@ -1,4 +1,5 @@
-import 'package:app3/src/SignIn_page.dart';
+import 'package:app3/src/menu_page.dart';
+import 'package:app3/src/resetPassword_page.dart';
 import 'package:app3/src/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -142,18 +143,19 @@ class _LoginScreenState extends State<LoginPage> {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("No tienes una cuenta? "),
+                          Text("Has olvidado tu contraseña? "),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignInPage()));
+                                      builder: (context) =>
+                                          ResetPasswordPage()));
                             },
                             child: Text(
-                              "Registrate",
+                              "Recuperarla",
                               style: TextStyle(
-                                  color: Colors.redAccent,
+                                  color: Colors.deepPurple,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
@@ -178,7 +180,7 @@ class _LoginScreenState extends State<LoginPage> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Ingreso Satisfactorio"),
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage())),
+                      MaterialPageRoute(builder: (context) => menuPage())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

@@ -1,4 +1,5 @@
 import 'package:app3/src/home_page.dart';
+import 'package:app3/src/login_page.dart';
 import 'package:app3/src/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -208,9 +209,11 @@ class _RegistrationScreenState extends State<SignInPage> {
                   children: <Widget>[
                     SizedBox(
                         height: 180,
-                        child: Image.asset(
-                          "assets/logo.png",
-                          fit: BoxFit.contain,
+                        child: Image(
+                          image: NetworkImage(
+                              'https://i.ibb.co/ZSnQ8Hr/WALKDOG-1.png'),
+                          width: 250,
+                          height: 250,
                         )),
                     SizedBox(height: 45),
                     firstNameField,
@@ -296,6 +299,6 @@ class _RegistrationScreenState extends State<SignInPage> {
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
     Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
   }
 }
