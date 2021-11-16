@@ -13,11 +13,12 @@ import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
 import { SendEmailComponent } from './auth/send-email/send-email.component';
 
 import { AuthService } from '@auth/services/auth.service';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CanSuscriptorGuard } from '@app/auth/guards/can-suscriptor.guard';
 import { CanAdminGuard } from '@auth/guards/can-admin.guard';
 import { CanEditGuard } from '@auth/guards/can-edit.guard';
 import { CreateUsuarioComponent } from './create-usuario/create-usuario.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, SendEmailComponent],
@@ -28,6 +29,8 @@ import { CreateUsuarioComponent } from './create-usuario/create-usuario.componen
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireStorageModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   providers: [
     AuthService,

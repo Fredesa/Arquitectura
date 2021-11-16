@@ -56,10 +56,12 @@ export class CreateUsuarioComponent implements OnInit {
 
   agregarUsuario() {
     const usuario: any = {
+      edad: this.createUsuario.value.edad,
+      identificacion: this.createUsuario.value.identificacion,
+      idMedico: this.createUsuario.value.idMedico,
+      rol: this.createUsuario.value.rol,
+      idTratamiento: this.createUsuario.value.idTratamiento,
       nombre: this.createUsuario.value.nombre,
-      apellido: this.createUsuario.value.apellido,
-      documento: this.createUsuario.value.documento,
-      salario: this.createUsuario.value.salario,
       fechaCreacion: new Date(),
       fechaActualizacion: new Date()
     }
@@ -69,7 +71,7 @@ export class CreateUsuarioComponent implements OnInit {
         positionClass: 'toast-bottom-right'
       });
       this.loading = false;
-      this.router.navigate(['/list-usuarios']);
+      this.router.navigate(['/list']);
     }).catch(error => {
       console.log(error);
       this.loading = false;
