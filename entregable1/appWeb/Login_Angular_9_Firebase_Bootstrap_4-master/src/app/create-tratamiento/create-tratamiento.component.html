@@ -1,0 +1,35 @@
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>{{ titulo }}
+                        <div *ngIf="loading" class="spinner-border float-right" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                    </h3>
+                    <span *ngIf="submitted && createTratamiento.invalid" class="badge badge-danger">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
+                    <form class="mt-4" [formGroup]="createTratamiento" (ngSubmit)="agregarEditarTratamiento()">
+                        <input type="text" class="form-control form-control-lg" formControlName="nombre"
+                                    placeholder="Nombre">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="edad"
+                            placeholder="Edad">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="identificacion"
+                            placeholder="Nro de Identificacion">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idMedico"
+                            placeholder="Nro de Identificacion del Medico">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="rol"
+                            placeholder="Rol">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idTratamiento"
+                            placeholder="Nro de Tratamiento">
+                        <div class="mt-3">
+                            <button type="text" class="btn btn-secondary btn-lg mr-3"
+                                routerLink="/list-tratamientos">Volver</button>
+                            <button type="submit" class="btn btn-dark btn-lg">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -25,8 +25,8 @@ export class MedicamentoService {
     return this.firestore.collection('medicamentos').doc(id).snapshotChanges();
   }
 
-  actualizarEmpleado(id: string, data:any): Promise<any> {
-    return this.firestore.collection('empleados').doc(id).update(data);
+  actualizarMedicamento(id: string, data:any): Promise<any> {
+    return this.firestore.collection('medicamentos').doc(id).update(data);
   }
 
 }

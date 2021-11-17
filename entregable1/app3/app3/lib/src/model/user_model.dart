@@ -1,18 +1,31 @@
 class UserModel {
   String? uid;
-  String? email;
-  String? firstName;
-  String? secondName;
+  String? identificacion;
+  String? nombre;
+  String? correo;
+  String? edad;
+  String? idMedico;
+  String? idTratamiento;
 
-  UserModel({this.uid, this.email, this.firstName, this.secondName});
+  UserModel(
+      {this.uid,
+      this.nombre,
+      this.correo,
+      this.edad,
+      this.identificacion,
+      this.idMedico,
+      this.idTratamiento});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
       uid: map['uid'],
-      email: map['email'],
-      firstName: map['firstName'],
-      secondName: map['secondName'],
+      identificacion: map['identificacion'],
+      nombre: map['nombre'],
+      correo: map['correo'],
+      edad: map['edad'],
+      idMedico: map['idMedico'],
+      idTratamiento: map['idTratamiento'],
     );
   }
 
@@ -20,9 +33,12 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
-      'email': email,
-      'firstName': firstName,
-      'secondName': secondName,
+      'identificacion': identificacion,
+      'nombre': nombre,
+      'correo': correo,
+      'edad': edad,
+      'idMedico': idMedico,
+      'idTratamiento': idTratamiento,
     };
   }
 }

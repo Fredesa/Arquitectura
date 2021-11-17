@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomePage> {
   void initState() {
     super.initState();
     FirebaseFirestore.instance
-        .collection("users")
+        .collection("usuarios")
         .doc(user!.uid)
         .get()
         .then((value) {
@@ -42,10 +42,6 @@ class _HomeScreenState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                height: 150,
-                child: Image.asset("assets/logo.png", fit: BoxFit.contain),
-              ),
               Text(
                 "Welcome Back",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -53,12 +49,22 @@ class _HomeScreenState extends State<HomePage> {
               SizedBox(
                 height: 10,
               ),
-              Text("${loggedInUser.firstName} ${loggedInUser.secondName}",
+              Text("${loggedInUser.nombre}",
                   style: TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.w500,
                   )),
-              Text("${loggedInUser.email}",
+              Text("${loggedInUser.edad}",
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                  )),
+              Text("${loggedInUser.correo}",
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                  )),
+              Text("${loggedInUser.identificacion}",
                   style: TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.w500,

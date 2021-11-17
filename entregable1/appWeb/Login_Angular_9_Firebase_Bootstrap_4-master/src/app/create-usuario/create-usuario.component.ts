@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '@app/auth/services/auth.service';
 import { UsuarioService } from '@app/services/Usuario.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./create-usuario.component.css']
 })
 export class CreateUsuarioComponent implements OnInit {
+
+  private authSvc: AuthService;
   createUsuario: FormGroup;
   submitted = false;
   loading = false;
@@ -29,6 +34,9 @@ export class CreateUsuarioComponent implements OnInit {
       idMedico: [''],
       rol: ['', Validators.required],
       idTratamiento:[''],
+      password: ['', Validators.required],
+      passwordtwo: ['', Validators.required],
+      correo: ['', Validators.required]
 
     })
     this.id = this.aRoute.snapshot.paramMap.get('id');
@@ -53,39 +61,49 @@ export class CreateUsuarioComponent implements OnInit {
     }
 
   }
-
   agregarUsuario() {
-    const usuario: any = {
-      edad: this.createUsuario.value.edad,
-      identificacion: this.createUsuario.value.identificacion,
-      idMedico: this.createUsuario.value.idMedico,
-      rol: this.createUsuario.value.rol,
-      idTratamiento: this.createUsuario.value.idTratamiento,
-      nombre: this.createUsuario.value.nombre,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date()
+    if (this.createUsuario.value.password == this.createUsuario.value.passwordtwo){
+      const usuario: any = {
+        edad: this.createUsuario.value.edad,
+        identificacion: this.createUsuario.value.identificacion,
+        idMedico: this.createUsuario.value.idMedico,
+        rol: this.createUsuario.value.rol,
+        idTratamiento: this.createUsuario.value.idTratamiento,
+        nombre: this.createUsuario.value.nombre,
+        fechaCreacion: new Date(),
+        fechaActualizacion: new Date(),
+        password:this.createUsuario.value.password,
+        correo:  this.createUsuario.value.correo
+      }
+
+      
+      this.loading = true;
+
+      this._usuarioService.agregarUsuario(usuario).then(() => {
+        this.toastr.success('El usuario fue registrado con exito!', 'Usuario Registrado', {
+          positionClass: 'toast-bottom-right'
+        });
+
+        this.loading = false;
+        this.router.navigate(['/list']);
+      }).catch(error => {
+        console.log(error);
+        this.loading = false;
+      })
     }
-    this.loading = true;
-    this._usuarioService.agregarUsuario(usuario).then(() => {
-      this.toastr.success('El usuario fue registrado con exito!', 'Usuario Registrado', {
-        positionClass: 'toast-bottom-right'
-      });
-      this.loading = false;
-      this.router.navigate(['/list']);
-    }).catch(error => {
-      console.log(error);
-      this.loading = false;
-    })
+
   }
 
   editarUsuario(id: string) {
 
     const usuario: any = {
-      nombre: this.createUsuario.value.nombre,
-      apellido: this.createUsuario.value.apellido,
-      documento: this.createUsuario.value.documento,
-      salario: this.createUsuario.value.salario,      
-      fechaActualizacion: new Date()
+      edad: this.createUsuario.value.edad,
+        identificacion: this.createUsuario.value.identificacion,
+        idMedico: this.createUsuario.value.idMedico,
+        rol: this.createUsuario.value.rol,
+        idTratamiento: this.createUsuario.value.idTratamiento,
+        nombre: this.createUsuario.value.nombre,
+        fechaActualizacion: new Date()
     }
 
     this.loading = true;

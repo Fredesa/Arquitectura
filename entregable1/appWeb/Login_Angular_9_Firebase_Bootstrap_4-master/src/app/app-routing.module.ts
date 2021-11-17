@@ -21,19 +21,44 @@ const routes: Routes = [
       import('./auth/login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: 'register',
-    loadChildren: () =>
-      import('./auth/register/register.module').then((m) => m.RegisterModule),
-  },
-  {
-    path: 'list',
+    path: 'list-user',
     loadChildren: () =>
       import('./list-usuarios/list-usuarios.module').then((m) => m.ListUsuariosModule),
   },
   {
-    path: 'create',
+    path: 'create-user',
     loadChildren: () =>
       import('./create-usuario/create-usuario.module').then((m) => m.CreateUsuarioModule),
+  },
+  {
+    path: 'list-medicamento',
+    loadChildren: () =>
+      import('./list-medicamento/list-medicamento.module').then((m) => m.ListMedicamentosModule),
+  },
+  {
+    path: 'create-medicamento',
+    loadChildren: () =>
+      import('./create-medicamento/create-medicamento.module').then((m) => m.CreateMedicamentoModule),
+  },
+  {
+    path: 'list-recordatorio',
+    loadChildren: () =>
+      import('./list-recordatorio/list-recordatorio.module').then((m) => m.ListRecordatoriosModule),
+  },
+  {
+    path: 'create-recordatorio',
+    loadChildren: () =>
+      import('./create-recordatorio/create-recordatorio.module').then((m) => m.CreateRecordatorioModule),
+  },
+  {
+    path: 'list-tratamiento',
+    loadChildren: () =>
+      import('./list-tratamiento/list-tratamiento.module').then((m) => m.ListTratamientosModule),
+  },
+  {
+    path: 'create-tratamiento',
+    loadChildren: () =>
+      import('./create-tratamiento/create-tratamiento.module').then((m) => m.CreateTratamientoModule),
   },
   {
     path: 'verification-email',

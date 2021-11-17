@@ -1,0 +1,38 @@
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <span class="h3">Listado de Empleados</span>
+            <button class="btn btn-dark btn-lg float-right" routerLink="/create">Agregar</button>
+            <h5 style="margin-top: 30px;" *ngIf="recordatorios.length == 0">No hay datos para mostrar</h5>
+            <table *ngIf="recordatorios.length > 0" class="table table-striped mt-5">
+                <thead>
+                  <tr>
+                    <th>nombre<th>
+                    <th>edad</th>
+                    <th> identificacion</th>
+                    <th>idMedico</th>
+                    <th>rol</th>
+                    <th>idTratamiento</th>
+
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let recordatorio of recordatorios">
+                    <td>{{ recordatorio.nombre }}</td>
+                    <td>{{ recordatorio.edad }}</td>
+                    <td>{{ recordatorio.identificacion }}</td>
+                    <td>{{ recordatorio.idMedico }}</td>
+                    <td>{{ recordatorio.rol }}</td>
+                    <td>{{ recordatorio.idTratamiento }}</td>
+
+                    <td>
+                      <i class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editRecordatorio/', recordatorio.id]"></i>
+                      <i (click)="eliminarRecordatorio(recordatorio.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>

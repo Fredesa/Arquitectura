@@ -1,3 +1,4 @@
+import 'package:app3/src/enciclopedia_page.dart';
 import 'package:flutter/material.dart';
 
 class menuPage extends StatelessWidget {
@@ -58,7 +59,10 @@ class menuPage extends StatelessWidget {
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => enciclopediaPage()));
+          },
           child: Text(
             "Enciclopedia",
             textAlign: TextAlign.center,
