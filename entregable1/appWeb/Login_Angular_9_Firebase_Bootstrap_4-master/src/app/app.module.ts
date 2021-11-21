@@ -16,10 +16,9 @@ import { AuthService } from '@auth/services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateUsuarioComponent } from './create-usuario/create-usuario.component';
 import { ToastrModule } from 'ngx-toastr';
-import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SendEmailComponent, FooterComponent],
+  declarations: [AppComponent, NavbarComponent, SendEmailComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
