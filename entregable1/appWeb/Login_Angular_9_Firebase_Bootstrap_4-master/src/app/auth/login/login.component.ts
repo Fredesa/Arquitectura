@@ -22,20 +22,11 @@ export class LoginComponent {
     try {
       const user = await this.authSvc.login(email, password);
       if (user) {
-        this.checkUserIsVerified(user);
+        this.router.navigate(['/home'])
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  private checkUserIsVerified(user: User) {
-    if (user && user.emailVerified) {
-      this.router.navigate(['/home']);
-    } else if (user) {
-      this.router.navigate(['/verification-email']);
-    } else {
-      this.router.navigate(['/register']);
-    }
-  }
 }

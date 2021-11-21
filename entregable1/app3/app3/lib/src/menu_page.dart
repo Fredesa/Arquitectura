@@ -1,4 +1,7 @@
 import 'package:app3/src/enciclopedia_page.dart';
+import 'package:app3/src/recordatorios_page.dart';
+import 'package:app3/src/registro_page.dart';
+import 'package:app3/src/tratamientos_page.dart';
 import 'package:flutter/material.dart';
 
 class menuPage extends StatelessWidget {
@@ -13,7 +16,10 @@ class menuPage extends StatelessWidget {
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => tratamientoPage()));
+          },
           child: Text(
             "Tratamientos",
             textAlign: TextAlign.center,
@@ -28,7 +34,10 @@ class menuPage extends StatelessWidget {
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => recordatorioPage()));
+          },
           child: Text(
             "Recordatorios",
             textAlign: TextAlign.center,
@@ -43,7 +52,10 @@ class menuPage extends StatelessWidget {
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => RegistroPage()));
+          },
           child: Text(
             "Registro de Estado de salud",
             textAlign: TextAlign.center,
@@ -60,7 +72,7 @@ class menuPage extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => enciclopediaPage()));
           },
           child: Text(
@@ -76,13 +88,14 @@ class menuPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.red),
-          onPressed: () {
-            // passing this to our root
-            Navigator.of(context).pop();
-          },
-        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.logout, color: Colors.deepPurple),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(

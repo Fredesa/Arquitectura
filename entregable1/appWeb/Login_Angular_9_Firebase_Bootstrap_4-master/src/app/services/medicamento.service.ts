@@ -9,12 +9,13 @@ export class MedicamentoService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  agregarMedicamento(medicamento: any): Promise<any> {
-    return this.firestore.collection('medicamentos').add(medicamento);
+  agregarMedicamento(id: string,medicamento: any): Promise<any> {
+    console.log(id)
+    return this.firestore.collection('medicamentos').doc(id).set(medicamento);
   }
 
   getMedicamentos(): Observable<any> {
-    return this.firestore.collection('medicamentos', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
+    return this.firestore.collection('medicamentos').snapshotChanges();
   }
 
   eliminarMedicamento(id: string): Promise<any> {

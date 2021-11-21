@@ -1,31 +1,39 @@
 <div class="container pt-4">
-  <div class="row">
-      <div class="col-lg-6 offset-lg-3">
-          <div class="card text-center">
-              <div class="card-body">
-                  <h3>Agregar Tratamiento</h3>
-                  <form class="mt-4">
-                      <div class="row">
-                          <div class="col">
-                              <input type="text" class="form-control form-control-lg " placeholder="ID">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>{{ titulo }}
+                        <div *ngIf="loading" class="spinner-border float-right" role="status">
+                            <span class="sr-only">Loading...</span>
                           </div>
-                          <div class="col">
-                              <input type="text" class="form-control form-control-lg " placeholder="nombre">
-                          </div>
-                      </div>
-                      <input type="text" class="form-control form-control-lg mt-3" placeholder="dosis">
-                      <input type="text" class="form-control form-control-lg mt-3" placeholder="horario">
-                      <input type="text" class="form-control form-control-lg mt-3" placeholder="tipoadmin">
-                      <input type="text" class="form-control form-control-lg mt-3" placeholder="fecha inicio">
-                      <input type="text" class="form-control form-control-lg mt-3" placeholder="fecha fin">
-                      <div class="mt-3">
-                          <button type="text" class="btn btn-secondary btn-lg mr-3" routerLink="/list">Volver</button>
-                          <button type="submit" class="btn btn-dark btn-lg ">Agregar</button>
-                      </div>
-
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+                    </h3>
+                    <span *ngIf="submitted && createMedicamento.invalid" class="badge badge-danger">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
+                    <form class="mt-4" [formGroup]="createMedicamento" (ngSubmit)="agregarEditarMedicamento()">
+                        <input type="text" class="form-control form-control-lg" formControlName="id"
+                                    placeholder="id del medicamento">
+                        <input type="text" class="form-control form-control-lg" formControlName="nombre"
+                                    placeholder="Nombre">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="laboratorio"
+                            placeholder="Laboratorio">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="cantidad"
+                            placeholder="Cantidad">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="concentracion"
+                            placeholder="Concentracion del Medicamento">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="formafarmaceutica"
+                            placeholder="Forma farmaceutica">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="unidadmedida"
+                            placeholder="Unidad de Medida">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="viaadministracion"
+                            placeholder="Via de Admiistracion">
+                        <div class="mt-3">
+                            <button type="text" class="btn btn-secondary btn-lg mr-3"
+                                routerLink="/list-medicamentos">Volver</button>
+                            <button type="submit" class="btn btn-dark btn-lg">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

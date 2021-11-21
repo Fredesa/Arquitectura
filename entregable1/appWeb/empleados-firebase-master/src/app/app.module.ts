@@ -14,9 +14,9 @@ import { ListEmpleadosComponent } from './components/list-empleados/list-emplead
 import { CreateEmpleadoComponent } from './components/create-empleado/create-empleado.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
-import { CreateMedicamentoComponent } from './create-medicamento/create-medicamento.component';
-import { LoginComponent } from './login/login.component';
-import { CreateTratamientoComponent } from './create-tratamiento/create-tratamiento.component';
+import { CreateMedicamentoComponent } from './components/create-medicamento/create-medicamento.component';
+import { LoginComponent } from './components/login/login.component';
+import { CreateTratamientoComponent } from './components/create-tratamiento/create-tratamiento.component';
 
 @NgModule({
   declarations: [

@@ -1,4 +1,3 @@
-import { CanAdminGuard } from '@auth/guards/can-admin.guard';
 
 import { SendEmailComponent } from '@auth/send-email/send-email.component';
 import { ListUsuariosComponent } from './list-usuarios/list-usuarios.component';
@@ -70,12 +69,6 @@ const routes: Routes = [
       import('./auth/forgot-password/forgot-password.module').then(
         (m) => m.ForgotPasswordModule
       ),
-  },
-  {
-    path: 'admin',
-    loadChildren: () =>
-      import('./admin/admin.module').then((m) => m.AdminModule),
-    canActivate: [CanAdminGuard],
   },
 ];
 

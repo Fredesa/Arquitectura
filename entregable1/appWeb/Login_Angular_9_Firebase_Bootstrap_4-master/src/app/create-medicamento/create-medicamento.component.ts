@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,13 +24,14 @@ export class CreateMedicamentoComponent implements OnInit {
     private toastr: ToastrService,
     private aRoute: ActivatedRoute) {
     this.createMedicamento = this.fb.group({
+      id: ['',Validators.required],
       nombre: ['', Validators.required],
-      edad: ['', Validators.required],
-      identificacion: ['', Validators.required],
-      idMedico: [''],
-      rol: ['', Validators.required],
-      idTratamiento:[''],
-
+      laboratorio: ['', Validators.required],
+      cantidad: ['', Validators.required],
+      concentracion: ['', Validators.required],
+      formafarmaceutica: ['', Validators.required],
+      unidadmedida: ['', Validators.required],
+      viaadministracion: ['', Validators.required],
     })
     this.id = this.aRoute.snapshot.paramMap.get('id');
     console.log(this.id)
@@ -56,17 +58,18 @@ export class CreateMedicamentoComponent implements OnInit {
 
   agregarMedicamento() {
     const medicamento: any = {
-      edad: this.createMedicamento.value.edad,
-      identificacion: this.createMedicamento.value.identificacion,
-      idMedico: this.createMedicamento.value.idMedico,
-      rol: this.createMedicamento.value.rol,
-      idTratamiento: this.createMedicamento.value.idTratamiento,
+      id: this.createMedicamento.value.id,
       nombre: this.createMedicamento.value.nombre,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date()
+      laboratorio: this.createMedicamento.value.laboratorio,
+      cantidad: this.createMedicamento.value.cantidad,
+      concentracion: this.createMedicamento.value.concentracion,
+      formafarmaceutica: this.createMedicamento.value.formafarmaceutica,
+      unidadmedida: this.createMedicamento.value.unidadmedida,
+      viaadministracion: this.createMedicamento.value.viaadministracion,
     }
     this.loading = true;
-    this._medicamentoService.agregarMedicamento(medicamento).then(() => {
+    console.log(medicamento)
+    this._medicamentoService.agregarMedicamento(medicamento.id,medicamento).then(() => {
       this.toastr.success('El medicamento fue registrado con exito!', 'Medicamento Registrado', {
         positionClass: 'toast-bottom-right'
       });
@@ -81,11 +84,13 @@ export class CreateMedicamentoComponent implements OnInit {
   editarMedicamento(id: string) {
 
     const medicamento: any = {
-      nombre: this.createMedicamento.value.nombre,
-      apellido: this.createMedicamento.value.apellido,
-      documento: this.createMedicamento.value.documento,
-      salario: this.createMedicamento.value.salario,
-      fechaActualizacion: new Date()
+      nnombre: this.createMedicamento.value.nombre,
+      laboratorio: this.createMedicamento.value.laboratorio,
+      cantidad: this.createMedicamento.value.cantidad,
+      concentracion: this.createMedicamento.value.concentracion,
+      formafarmaceutica: this.createMedicamento.value.formafarmaceutica,
+      unidadmedida: this.createMedicamento.value.unidadmedida,
+      viaadministracion: this.createMedicamento.value.viaadministracion,
     }
 
     this.loading = true;
@@ -107,10 +112,13 @@ export class CreateMedicamentoComponent implements OnInit {
       this._medicamentoService.getMedicamento(this.id).subscribe(data => {
         this.loading = false;
         this.createMedicamento.setValue({
-          nombre: data.payload.data()['nombre'],
-          apellido: data.payload.data()['apellido'],
-          documento: data.payload.data()['documento'],
-          salario: data.payload.data()['salario'],
+          nombre: this.createMedicamento.value.nombre,
+      laboratorio: this.createMedicamento.value.laboratorio,
+      cantidad: this.createMedicamento.value.cantidad,
+      concentracion: this.createMedicamento.value.concentracion,
+      formafarmaceutica: this.createMedicamento.value.formafarmaceutica,
+      unidadmedida: this.createMedicamento.value.unidadmedida,
+      viaadministracion: this.createMedicamento.value.viaadministracion,
         })
       })
     }

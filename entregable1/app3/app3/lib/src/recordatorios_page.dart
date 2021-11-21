@@ -2,17 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class recordatorioPage extends StatelessWidget {
-  final db = FirebaseFirestore.instance;
+  final d1 = FirebaseFirestore.instance.collection("Recordatorios");
+  final d2 = FirebaseFirestore.instance.collection("medicamentos");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Enciclopedia"),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            );
+          },
+        ),
+        title: Text("Recordatorios"),
         backgroundColor: Colors.deepPurple,
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: db.collection('medicamentos').snapshots(),
+        stream: d1.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -23,9 +33,8 @@ class recordatorioPage extends StatelessWidget {
               children: snapshot.data!.docs.map((doc) {
                 return Card(
                   child: ListTile(
-                    title: Text(doc['nombre']),
-                    trailing: Icon(Icons.keyboard_arrow_right,
-                        color: Colors.deepPurple),
+                    title: Text(doc["idMedicamento"]),
+                    subtitle: Text("Se debe tomar en ${doc["hora"]} horas"),
                   ),
                 );
               }).toList(),

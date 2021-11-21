@@ -8,14 +8,12 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
-import { RoleValidator } from '@auth/helpers/roleValidator';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService extends RoleValidator {
+export class AuthService {
   public user$: Observable<User>;
 
   constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore) {
-    super();
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
@@ -26,17 +24,6 @@ export class AuthService extends RoleValidator {
     );
   }
 
-  async loginGoogle(): Promise<User> {
-    try {
-      const { user } = await this.afAuth.signInWithPopup(
-        new auth.GoogleAuthProvider()
-      );
-      this.updateUserData(user);
-      return user;
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   async resetPassword(email: string): Promise<void> {
     try {
@@ -56,7 +43,6 @@ export class AuthService extends RoleValidator {
         email,
         password
       );
-      this.updateUserData(user);
       return user;
     } catch (error) {
       console.log(error);
@@ -95,7 +81,6 @@ export class AuthService extends RoleValidator {
       emailVerified: user.emailVerified,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      role: 'ADMIN',
     };
 
     return userRef.set(data, { merge: true });

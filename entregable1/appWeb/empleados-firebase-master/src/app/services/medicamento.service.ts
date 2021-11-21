@@ -5,28 +5,28 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class EmpleadoService {
+export class MedicamentoService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  agregarEmpleado(empleado: any): Promise<any> {
-    return this.firestore.collection('empleados').add(empleado);
+  agregarMedicamento(medicamento: any): Promise<any> {
+    return this.firestore.collection('medicamentos').add(medicamento);
   }
 
-  getEmpleados(): Observable<any> {
-    return this.firestore.collection('empleados', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
+  getMedicamentos(): Observable<any> {
+    return this.firestore.collection('medicamentos', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
   }
 
-  eliminarEmpleado(id: string): Promise<any> {
-    return this.firestore.collection('empleados').doc(id).delete();
+  eliminarMedicamento(id: string): Promise<any> {
+    return this.firestore.collection('medicamentos').doc(id).delete();
   }
 
-  getEmpleado(id: string): Observable<any> {
-    return this.firestore.collection('empleados').doc(id).snapshotChanges();
+  getMedicamento(id: string): Observable<any> {
+    return this.firestore.collection('medicamentos').doc(id).snapshotChanges();
   }
 
-  actualizarEmpleado(id: string, data:any): Promise<any> {
-    return this.firestore.collection('empleados').doc(id).update(data);
+  actualizarMedicamento(id: string, data:any): Promise<any> {
+    return this.firestore.collection('medicamentos').doc(id).update(data);
   }
 
 }

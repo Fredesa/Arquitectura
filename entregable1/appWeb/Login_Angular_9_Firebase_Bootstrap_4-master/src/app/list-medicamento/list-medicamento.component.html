@@ -1,18 +1,19 @@
 <div class="container mt-4">
     <div class="card">
         <div class="card-body">
-            <span class="h3">Listado de Empleados</span>
-            <button class="btn btn-dark btn-lg float-right" routerLink="/create">Agregar</button>
+            <span class="h3">Listado de Medicamentos</span>
+            <button class="btn btn-dark btn-lg float-right" routerLink="/create-medicamento">Agregar</button>
             <h5 style="margin-top: 30px;" *ngIf="medicamentos.length == 0">No hay datos para mostrar</h5>
             <table *ngIf="medicamentos.length > 0" class="table table-striped mt-5">
                 <thead>
                   <tr>
-                    <th>nombre<th>
-                    <th>edad</th>
-                    <th> identificacion</th>
-                    <th>idMedico</th>
-                    <th>rol</th>
-                    <th>idTratamiento</th>
+                    <th>nombre</th>
+                    <th>laboratorio</th>
+                    <th> cantidad</th>
+                    <th>concentracion</th>
+                    <th>forma Farmaceutica</th>
+                    <th>unidad de Medida</th>
+                    <th>Via de Administracion</th>
 
                     <th></th>
                   </tr>
@@ -20,11 +21,12 @@
                 <tbody>
                   <tr *ngFor="let medicamento of medicamentos">
                     <td>{{ medicamento.nombre }}</td>
-                    <td>{{ medicamento.edad }}</td>
-                    <td>{{ medicamento.identificacion }}</td>
-                    <td>{{ medicamento.idMedico }}</td>
-                    <td>{{ medicamento.rol }}</td>
-                    <td>{{ medicamento.idTratamiento }}</td>
+                    <td>{{ medicamento.laboratorio }}</td>
+                    <td>{{ medicamento.cantidad }}</td>
+                    <td>{{ medicamento.concentracion }}</td>
+                    <td>{{ medicamento.formafarmaceutica }}</td>
+                    <td>{{ medicamento.unidadmedida }}</td>
+                    <td>{{ medicamento.viaadministracion }}</td>
 
                     <td>
                       <i class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editMedicamento/', medicamento.id]"></i>

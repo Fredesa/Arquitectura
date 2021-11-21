@@ -76,7 +76,7 @@ export class CreateUsuarioComponent implements OnInit {
         correo:  this.createUsuario.value.correo
       }
 
-      
+      console.log(usuario)
       this.loading = true;
 
       this._usuarioService.agregarUsuario(usuario).then(() => {
