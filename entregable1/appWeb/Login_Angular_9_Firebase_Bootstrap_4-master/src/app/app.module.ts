@@ -16,9 +16,13 @@ import { AuthService } from '@auth/services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateUsuarioComponent } from './create-usuario/create-usuario.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ContentCalendarComponent } from './components/content-calendar/content-calendar.component';
+import { EventsComponent } from './components/content-calendar/events/events.component';
+import { AddEventComponent } from './components/content-calendar/add-event/add-event.component';
+
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SendEmailComponent],
+  declarations: [AppComponent, NavbarComponent, SendEmailComponent, ContentCalendarComponent, EventsComponent, AddEventComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

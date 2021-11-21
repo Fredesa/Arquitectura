@@ -3,6 +3,8 @@
         <div class="card-body">
             <span class="h3">Listado de Tratamientos</span>
             <button class="btn btn-primary btn-lg float-right" routerLink="/create">Agregar</button>
+            <a [routerLink]="['/events']" class="nav-link active">Calendario Estado Salud</a>
+            <a [routerLink]="['/add-event']"  class="nav-link active">Añadir Tratamiento</a>
             <h5 style="margin-top: 30px;" *ngIf="tratamientos.length == 0">No hay datos para mostrar</h5>
             <table *ngIf="tratamientos.length > 0" class="table table-striped mt-5">
                 <thead>

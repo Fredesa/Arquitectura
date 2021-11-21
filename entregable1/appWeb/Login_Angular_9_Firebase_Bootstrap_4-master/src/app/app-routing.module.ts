@@ -3,6 +3,8 @@ import { SendEmailComponent } from '@auth/send-email/send-email.component';
 import { ListUsuariosComponent } from './list-usuarios/list-usuarios.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EventsComponent } from './components/content-calendar/events/events.component';
+import { AddEventComponent } from './components/content-calendar/add-event/add-event.component';
 
 const routes: Routes = [
   {
@@ -19,6 +21,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./auth/login/login.module').then((m) => m.LoginModule),
   },
+  {path:'events',component:EventsComponent},
+  {path:'add-event',component:AddEventComponent},
   {
     path: 'list-user',
     loadChildren: () =>
