@@ -1,7 +1,7 @@
 <div class="container mt-4">
     <div class="card">
         <div class="card-body">
-            <span class="h3">Listado de Empleados</span>
+            <span class="h3">Listado de Recordatorios</span>
             <button class="btn btn-dark btn-lg float-right" routerLink="/create">Agregar</button>
             <h5 style="margin-top: 30px;" *ngIf="recordatorios.length == 0">No hay datos para mostrar</h5>
             <table *ngIf="recordatorios.length > 0" class="table table-striped mt-5">
@@ -34,5 +34,6 @@
                 </tbody>
               </table>
         </div>
+        <button class="btn btn-primary btn-sm float-right" routerLink="/home">Volver</button>
     </div>
 </div>
