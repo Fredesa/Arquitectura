@@ -10,9 +10,9 @@
                     </h3>
                     <span *ngIf="submitted && createRecordatorio.invalid" class="badge badge-danger">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
                     <form class="mt-4" [formGroup]="createRecordatorio" (ngSubmit)="agregarEditarRecordatorio()">
-                        <input type="number" class="form-control form-control-lg" formControlName="idPaciente"
+                        <input type="text" class="form-control form-control-lg" formControlName="idPaciente"
                                     placeholder="Id del Paciente">
-                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idMedicamento"
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="idMedicamento"
                             placeholder="Id del Medicamento">
                         <input type="time" class="form-control form-control-lg mt-3" formControlName="hora"
                             placeholder="Hora entre medicamento">

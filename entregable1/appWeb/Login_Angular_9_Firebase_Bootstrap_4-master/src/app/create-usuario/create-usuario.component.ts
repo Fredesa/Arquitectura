@@ -78,15 +78,14 @@ export class CreateUsuarioComponent implements OnInit {
 
       console.log(usuario)
       this.loading = true;
-
-      this._usuarioService.agregarUsuario(usuario).then(() => {
-        this.authSvc.register(usuario.email, usuario.password),         
+      this.authSvc.register(this.createUsuario.value.correo, this.createUsuario.value.password)
+      this._usuarioService.agregarUsuario(usuario).then(() => {         
         this.toastr.success('El usuario fue registrado con exito!', 'Usuario Registrado', {
           positionClass: 'toast-bottom-right'
         });
 
         this.loading = false;
-        this.router.navigate(['/list']);
+        this.router.navigate(['/list-usuarios']);
       }).catch(error => {
         console.log(error);
         this.loading = false;

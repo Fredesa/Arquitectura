@@ -11,6 +11,7 @@ export class UsuarioService {
 
   agregarUsuario(usuario: any): Promise<any> {
     return this.firestore.collection('usuarios').add(usuario);
+
   }
 
   getUsuarios(): Observable<any> {

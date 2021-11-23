@@ -64,7 +64,7 @@ export class CreateRecordatorioComponent implements OnInit {
         positionClass: 'toast-bottom-right'
       });
       this.loading = false;
-      this.router.navigate(['/list']);
+      this.router.navigate(['/list-recordatorio']);
     }).catch(error => {
       console.log(error);
       this.loading = false;

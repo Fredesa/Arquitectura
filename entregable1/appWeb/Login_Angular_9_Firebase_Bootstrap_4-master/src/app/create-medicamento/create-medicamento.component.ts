@@ -100,7 +100,7 @@ export class CreateMedicamentoComponent implements OnInit {
       this.toastr.info('El medicamento fue modificado con exito', 'Medicamento modificado', {
         positionClass: 'toast-bottom-right'
       })
-      this.router.navigate(['/list-medicamentos']);
+      this.router.navigate(['/list-medicamento']);
     })
   }
 
