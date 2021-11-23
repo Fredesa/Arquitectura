@@ -1,22 +1,20 @@
 <div class="container mt-4">
-    <div class="card">
+    <div class="card ">
         <div class="card-body">
             <span class="h3">Listado de Medicamentos</span>
             <button class="btn btn-primary btn-lg float-right" routerLink="/create-medicamento">Agregar</button>
             <h5 style="margin-top: 30px;" *ngIf="medicamentos.length == 0">No hay datos para mostrar</h5>
-            <table *ngIf="medicamentos.length > 0" class="table table-striped mt-5">
-                <thead>
+            <div class="table-responsive">
+            <table *ngIf="medicamentos.length > 0" class="table table-bordered mt-5">
+                <thead >
                   <tr>
-                    <th>nombre</th>
-                    <th>laboratorio</th>
-                    <th> cantidad</th>
-                    <th>concentracion</th>
-                    <th>forma Farmaceutica</th>
-                    <th>unidad de Medida</th>
+                    <th>Nombre</th>
+                    <th>Laboratorio</th>
+                    <th>Cantidad</th>
+                    <th>Concentracion</th>
+                    <th>Forma Farmaceutica</th>
+                    <th>Unidad de Medida</th>
                     <th>Via de Administracion</th>
-                    <th>imagen</th>
-
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -28,16 +26,15 @@
                     <td>{{ medicamento.formafarmaceutica }}</td>
                     <td>{{ medicamento.unidadmedida }}</td>
                     <td>{{ medicamento.viaadministracion }}</td>
-                    <td>{{ medicamento.url }}</td>
-
-                    <td>
-                      <i class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editMedicamento/', medicamento.id]"></i>
-                      <i (click)="eliminarMedicamento(medicamento.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
-                    </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
         </div>
-        <button class="btn btn-primary btn-sm float-right" routerLink="/home">Volver</button>
     </div>
+    <p></p>
+    <center>
+      <button class="btn btn-primary btn-lg float-center" routerLink="/home">Volver</button>
+    </center>
+    
 </div>

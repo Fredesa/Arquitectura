@@ -80,6 +80,7 @@ export class CreateUsuarioComponent implements OnInit {
       this.loading = true;
 
       this._usuarioService.agregarUsuario(usuario).then(() => {
+        this.authSvc.register(usuario.email, usuario.password),         
         this.toastr.success('El usuario fue registrado con exito!', 'Usuario Registrado', {
           positionClass: 'toast-bottom-right'
         });
@@ -119,7 +120,7 @@ export class CreateUsuarioComponent implements OnInit {
 
 
   esEditar() {
-    this.titulo = 'Editar Usuario'
+    this.titulo = 'Agregar Usuario'
     if (this.id !== null) {
       this.loading = true;
       this._usuarioService.getUsuario(this.id).subscribe(data => {

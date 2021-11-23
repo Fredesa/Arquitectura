@@ -106,7 +106,7 @@ export class CreateMedicamentoComponent implements OnInit {
 
 
   esEditar() {
-    this.titulo = 'Editar Medicamento'
+    this.titulo = 'Crear Medicamento'
     if (this.id !== null) {
       this.loading = true;
       this._medicamentoService.getMedicamento(this.id).subscribe(data => {

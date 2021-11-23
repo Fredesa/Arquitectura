@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ListMedicamentosRoutingModule } from './list-medicamento-routing.module';
@@ -11,6 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule],
   exports: [
     ReactiveFormsModule
+  ],
+  schemas:[
+    NO_ERRORS_SCHEMA
   ]
 })
 export class ListMedicamentosModule {}
