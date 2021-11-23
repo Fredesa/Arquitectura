@@ -2,40 +2,37 @@
     <div class="card">
         <div class="card-body">
             <span class="h3">Listado de Tratamientos</span>
-            <button class="btn btn-primary btn-lg float-right" routerLink="/create">Agregar</button>
-            <a [routerLink]="['/events']" class="nav-link active">Calendario Estado Salud</a>
-            <a [routerLink]="['/add-event']"  class="nav-link active">Añadir Tratamiento</a>
+            <button class="btn btn-primary btn-lg float-right" routerLink="/create-tratamiento">Agregar</button>
             <h5 style="margin-top: 30px;" *ngIf="tratamientos.length == 0">No hay datos para mostrar</h5>
-            <table *ngIf="tratamientos.length > 0" class="table table-striped mt-5">
+            <table *ngIf="tratamientos.length > 0" class="table table-bordered mt-5">
                 <thead>
                   <tr>
-                    <th>nombre<th>
-                    <th>edad</th>
-                    <th> identificacion</th>
-                    <th>idMedico</th>
-                    <th>rol</th>
-                    <th>idTratamiento</th>
-
-                    <th></th>
+                    <th>Nombre</th>
+                    <th>Medicamento</th>
+                    <th>Paciente</th>
+                    <th>Tipo de Administracion</th>
+                    <th>Dosis</th>
+                    <th>fecha de Inicion</th>
+                    <th>fecha de Finalizacion</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let tratamiento of tratamientos">
                     <td>{{ tratamiento.nombre }}</td>
-                    <td>{{ tratamiento.edad }}</td>
-                    <td>{{ tratamiento.identificacion }}</td>
-                    <td>{{ tratamiento.idMedico }}</td>
-                    <td>{{ tratamiento.rol }}</td>
-                    <td>{{ tratamiento.idTratamiento }}</td>
+                    <td>{{ tratamiento.idMedicamento }}</td>
+                    <td>{{ tratamiento.idPaciente }}</td>
+                    <td>{{ tratamiento.tipoAdministracion }}</td>
+                    <td>{{ tratamiento.Dosis }}</td>
+                    <td>{{ tratamiento.fechaInicio }}</td>
+                    <td>{{ tratamiento.fechaFin }}</td>
 
-                    <td>
-                      <i class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editTratamiento/', tratamiento.id]"></i>
-                      <i (click)="eliminarTratamiento(tratamiento.id)" class="fas fa-trash-alt fa-lg text-danger"></i>
-                    </td>
                   </tr>
                 </tbody>
               </table>
         </div>
-        <button class="btn btn-primary btn-sm float-right" routerLink="/home">Volver</button>
     </div>
+    <p></p>
+    <center>
+      <button class="btn btn-primary btn-lg float-center" routerLink="/home">Volver</button>
+    </center>
 </div>

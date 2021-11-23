@@ -2,29 +2,25 @@
     <div class="card">
         <div class="card-body">
             <span class="h3">Listado de Recordatorios</span>
-            <button class="btn btn-primary btn-lg float-right" routerLink="/create">Agregar</button>
+            <button class="btn btn-primary btn-lg float-right" routerLink="/create-recordatorio">Agregar</button>
             <h5 style="margin-top: 30px;" *ngIf="recordatorios.length == 0">No hay datos para mostrar</h5>
             <table *ngIf="recordatorios.length > 0" class="table table-striped mt-5">
                 <thead>
                   <tr>
-                    <th>nombre<th>
-                    <th>edad</th>
-                    <th> identificacion</th>
-                    <th>idMedico</th>
-                    <th>rol</th>
-                    <th>idTratamiento</th>
+                    <th>Id del Paciente</th>
+                    <th>Id del Medicamento</th>
+                    <th>Tiempo</th>
+                    <th>Cantidad</th>
 
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let recordatorio of recordatorios">
-                    <td>{{ recordatorio.nombre }}</td>
-                    <td>{{ recordatorio.edad }}</td>
-                    <td>{{ recordatorio.identificacion }}</td>
-                    <td>{{ recordatorio.idMedico }}</td>
-                    <td>{{ recordatorio.rol }}</td>
-                    <td>{{ recordatorio.idTratamiento }}</td>
+                    <td>{{ recordatorio.idPaciente }}</td>
+                    <td>{{ recordatorio.idMedicamento }}</td>
+                    <td>{{ recordatorio.hora }} Horas</td>
+                    <td>{{ recordatorio.cantidad }}</td>
 
                     <td>
                       <i class="fas fa-edit fa-lg text-info mr-2" [routerLink]="['/editRecordatorio/', recordatorio.id]"></i>
@@ -34,6 +30,9 @@
                 </tbody>
               </table>
         </div>
-        <button class="btn btn-primary btn-sm float-right" routerLink="/home">Volver</button>
     </div>
+    <p></p>
+    <center>
+      <button class="btn btn-primary btn-lg float-center" routerLink="/home">Volver</button>
+    </center>
 </div>

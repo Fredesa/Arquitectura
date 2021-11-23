@@ -24,11 +24,13 @@ export class CreateTratamientoComponent implements OnInit {
     private aRoute: ActivatedRoute) {
     this.createTratamiento = this.fb.group({
       nombre: ['', Validators.required],
-      edad: ['', Validators.required],
-      identificacion: ['', Validators.required],
-      idMedico: [''],
-      rol: ['', Validators.required],
-      idTratamiento:[''],
+      idMedicamento: ['',Validators.required],
+      idPaciente:['',Validators.required],
+      tipoAdministracion:['',Validators.required],
+      Dosis:['',Validators.required],
+      fechaInicio: ['', Validators.required],
+      fechaFin: ['', Validators.required],
+    
 
     })
     this.id = this.aRoute.snapshot.paramMap.get('id');
@@ -56,14 +58,13 @@ export class CreateTratamientoComponent implements OnInit {
 
   agregarTratamiento() {
     const tratamiento: any = {
-      edad: this.createTratamiento.value.edad,
-      identificacion: this.createTratamiento.value.identificacion,
-      idMedico: this.createTratamiento.value.idMedico,
-      rol: this.createTratamiento.value.rol,
-      idTratamiento: this.createTratamiento.value.idTratamiento,
       nombre: this.createTratamiento.value.nombre,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date()
+      idMedicamento: this.createTratamiento.value.idMedicamento,
+      idPaciente: this.createTratamiento.value.idPaciente,
+      tipoAdministracion: this.createTratamiento.value.tipoAdministracion,
+      Dosis: this.createTratamiento.value.Dosis,
+      fechaInicio: this.createTratamiento.value.fechaInicio,
+      fechaFin: this.createTratamiento.value.fechaFin,
     }
     this.loading = true;
     this._tratamientoService.agregarTratamiento(tratamiento).then(() => {
@@ -71,7 +72,7 @@ export class CreateTratamientoComponent implements OnInit {
         positionClass: 'toast-bottom-right'
       });
       this.loading = false;
-      this.router.navigate(['/list']);
+      this.router.navigate(['/list-tratamiento']);
     }).catch(error => {
       console.log(error);
       this.loading = false;
@@ -82,10 +83,12 @@ export class CreateTratamientoComponent implements OnInit {
 
     const tratamiento: any = {
       nombre: this.createTratamiento.value.nombre,
-      apellido: this.createTratamiento.value.apellido,
-      documento: this.createTratamiento.value.documento,
-      salario: this.createTratamiento.value.salario,
-      fechaActualizacion: new Date()
+      idMedicamento: this.createTratamiento.value.idMedicamento,
+      idPaciente: this.createTratamiento.value.idPaciente,
+      tipoAdministracion: this.createTratamiento.value.tipoAdministracion,
+      Dosis: this.createTratamiento.value.Dosis,
+      fechaInicio: this.createTratamiento.value.fechaInicio,
+      fechaFin: this.createTratamiento.value.fechaFin,
     }
 
     this.loading = true;
@@ -101,7 +104,7 @@ export class CreateTratamientoComponent implements OnInit {
 
 
   esEditar() {
-    this.titulo = 'Editar Tratamiento'
+    this.titulo = 'Agregar Tratamiento'
     if (this.id !== null) {
       this.loading = true;
       this._tratamientoService.getTratamiento(this.id).subscribe(data => {

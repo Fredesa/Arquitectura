@@ -14,7 +14,7 @@ export class TratamientoService {
   }
 
   getTratamientos(): Observable<any> {
-    return this.firestore.collection('tratamientos', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
+    return this.firestore.collection('tratamientos').snapshotChanges();
   }
 
   eliminarTratamiento(id: string): Promise<any> {

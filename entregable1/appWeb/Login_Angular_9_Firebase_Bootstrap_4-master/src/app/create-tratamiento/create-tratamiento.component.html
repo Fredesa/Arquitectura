@@ -12,16 +12,18 @@
                     <form class="mt-4" [formGroup]="createTratamiento" (ngSubmit)="agregarEditarTratamiento()">
                         <input type="text" class="form-control form-control-lg" formControlName="nombre"
                                     placeholder="Nombre">
-                        <input type="number" class="form-control form-control-lg mt-3" formControlName="edad"
-                            placeholder="Edad">
-                        <input type="number" class="form-control form-control-lg mt-3" formControlName="identificacion"
-                            placeholder="Nro de Identificacion">
-                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idMedico"
-                            placeholder="Nro de Identificacion del Medico">
-                        <input type="text" class="form-control form-control-lg mt-3" formControlName="rol"
-                            placeholder="Rol">
-                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idTratamiento"
-                            placeholder="Nro de Tratamiento">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idMedicamento"
+                            placeholder="Numero identificativo del Medicamento">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idPaciente"
+                            placeholder="Nro de Identificacion del Paciente">
+                        <input type="text" class="form-control form-control-lg mt-3" formControlName="tipoAdministracion"
+                            placeholder="Tipo de Administracion del Medicamento">
+                        <input type="number" class="form-control form-control-lg mt-3" formControlName="Dosis"
+                            placeholder="Dosis del Medicamento">
+                        <input type="date" class="form-control form-control-lg mt-3" formControlName="fechaInicio"
+                            placeholder="fecha de Inicion del Medicamento">
+                        <input type="date" class="form-control form-control-lg mt-3" formControlName="fechaFin"
+                            placeholder="fecha de Finalizacion del Medicamnento">
                         <div class="mt-3">
                             <button type="text" class="btn btn-secondary btn-lg mr-3"
                                 routerLink="/home">Volver</button>

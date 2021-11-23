@@ -23,13 +23,10 @@ export class CreateRecordatorioComponent implements OnInit {
     private toastr: ToastrService,
     private aRoute: ActivatedRoute) {
     this.createRecordatorio = this.fb.group({
-      nombre: ['', Validators.required],
-      edad: ['', Validators.required],
-      identificacion: ['', Validators.required],
-      idMedico: [''],
-      rol: ['', Validators.required],
-      idTratamiento:[''],
-
+      idPaciente: ['', Validators.required],
+      idMedicamento: ['', Validators.required],
+      cantidad: ['', Validators.required],
+      hora: [''],
     })
     this.id = this.aRoute.snapshot.paramMap.get('id');
     console.log(this.id)
@@ -56,14 +53,10 @@ export class CreateRecordatorioComponent implements OnInit {
 
   agregarRecordatorio() {
     const recordatorio: any = {
-      edad: this.createRecordatorio.value.edad,
-      identificacion: this.createRecordatorio.value.identificacion,
-      idMedico: this.createRecordatorio.value.idMedico,
-      rol: this.createRecordatorio.value.rol,
-      idTratamiento: this.createRecordatorio.value.idTratamiento,
-      nombre: this.createRecordatorio.value.nombre,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date()
+      idPaciente: this.createRecordatorio.value.idPaciente,
+      idMedicamento: this.createRecordatorio.value.idMedicamento,
+      cantidad: this.createRecordatorio.value.cantidad,
+      hora: this.createRecordatorio.value.hora,
     }
     this.loading = true;
     this._recordatorioService.agregarRecordatorio(recordatorio).then(() => {
@@ -81,11 +74,10 @@ export class CreateRecordatorioComponent implements OnInit {
   editarRecordatorio(id: string) {
 
     const recordatorio: any = {
-      nombre: this.createRecordatorio.value.nombre,
-      apellido: this.createRecordatorio.value.apellido,
-      documento: this.createRecordatorio.value.documento,
-      salario: this.createRecordatorio.value.salario,
-      fechaActualizacion: new Date()
+      idPaciente: this.createRecordatorio.value.idPaciente,
+      idMedicamento: this.createRecordatorio.value.idMedicamento,
+      cantidad: this.createRecordatorio.value.cantidad,
+      hora: this.createRecordatorio.value.hora,
     }
 
     this.loading = true;
@@ -95,13 +87,13 @@ export class CreateRecordatorioComponent implements OnInit {
       this.toastr.info('El recordatorio fue modificado con exito', 'Recordatorio modificado', {
         positionClass: 'toast-bottom-right'
       })
-      this.router.navigate(['/list-recordatorios']);
+      this.router.navigate(['/list-recordatorio']);
     })
   }
 
 
   esEditar() {
-    this.titulo = 'Editar Recordatorio'
+    this.titulo = 'Agregar Recordatorio'
     if (this.id !== null) {
       this.loading = true;
       this._recordatorioService.getRecordatorio(this.id).subscribe(data => {
