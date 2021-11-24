@@ -17,62 +17,65 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
 
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
-  final identificacionController = TextEditingController();
-  final telefonoController = TextEditingController();
-  final nombreController = TextEditingController();
-  final emailController = TextEditingController();
-  final direccionController = TextEditingController();
-  final passwordController = TextEditingController();
-  final password2Controller = TextEditingController();
+  final identificacionController = new TextEditingController();
+  final telefonoController = new TextEditingController();
+  final nombreController = new TextEditingController();
+  final emailController = new TextEditingController();
+  final direccionController = new TextEditingController();
+  final passwordController = new TextEditingController();
+  final password2Controller = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Registro Usuario'),
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-        children: [
-          _inputId(),
-          SizedBox(height: size.height * 0.02),
-          _inputNombre(),
-          SizedBox(height: size.height * 0.02),
-          _inputTelefono(),
-          SizedBox(height: size.height * 0.02),
-          _inputEmail(),
-          SizedBox(height: size.height * 0.02),
-          _inputDireccion(),
-          SizedBox(height: size.height * 0.02),
-          _inputPassword(),
-          SizedBox(height: size.height * 0.02),
-          _inputPassword2(),
-          SizedBox(height: size.height * 0.02),
-          Center(
-              child: SizedBox(
-            width: 300,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  onPrimary: Colors.black,
-                  primary: Colors.orange,
-                  side: BorderSide(color: Colors.black),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20))),
-              child: Text(
-                'Registrarte',
-                style: TextStyle(fontSize: 24),
-              ),
-              onPressed: () => _inputUsuario(
-                emailController.text,
-                passwordController.text,
-              ),
-            ),
-          ))
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Registro Usuario'),
+        ),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            children: [
+              _inputId(),
+              SizedBox(height: size.height * 0.02),
+              _inputNombre(),
+              SizedBox(height: size.height * 0.02),
+              _inputTelefono(),
+              SizedBox(height: size.height * 0.02),
+              _inputEmail(),
+              SizedBox(height: size.height * 0.02),
+              _inputDireccion(),
+              SizedBox(height: size.height * 0.02),
+              _inputPassword(),
+              SizedBox(height: size.height * 0.02),
+              _inputPassword2(),
+              SizedBox(height: size.height * 0.02),
+              Center(
+                  child: SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      onPrimary: Colors.black,
+                      primary: Colors.orange,
+                      side: BorderSide(color: Colors.black),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                  child: Text(
+                    'Registrarte',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  onPressed: () => _inputUsuario(
+                    emailController.text,
+                    passwordController.text,
+                  ),
+                ),
+              ))
+            ],
+          ),
+        ));
   }
 
   Widget _inputId() {
@@ -81,7 +84,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             width: 300,
             child: TextFormField(
               autofocus: true,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               validator: (value) {
                 RegExp regex = RegExp(r'^.{3,}$');
                 if (value!.isEmpty) {
@@ -92,6 +95,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
                 }
                 return null;
               },
+              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -124,6 +128,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               autofocus: true,
               controller: nombreController,
               textCapitalization: TextCapitalization.sentences,
+              keyboardType: TextInputType.text,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Por favor ingresar tu nombre completo';
@@ -160,7 +165,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             width: 300,
             child: TextFormField(
               autofocus: true,
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.text,
               controller: telefonoController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*$')),
@@ -172,6 +177,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
                 }
                 return null;
               },
+              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -202,6 +208,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             width: 300,
             child: TextFormField(
               autofocus: true,
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -244,7 +251,8 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             width: 300,
             child: TextFormField(
               autofocus: true,
-              keyboardType: TextInputType.streetAddress,
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -275,6 +283,16 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             width: 300,
             child: TextFormField(
               obscureText: true,
+              textInputAction: TextInputAction.next,
+              validator: (value) {
+                RegExp regex = new RegExp(r'^.{6,}$');
+                if (value!.isEmpty) {
+                  return ("Password is required for login");
+                }
+                if (!regex.hasMatch(value)) {
+                  return ("Enter Valid Password(Min. 6 Character)");
+                }
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -305,6 +323,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             width: 300,
             child: TextFormField(
               obscureText: true,
+              textInputAction: TextInputAction.next,
               validator: (value) {
                 if (password2Controller.text != passwordController.text) {
                   return "Password don't match";
@@ -335,14 +354,16 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
             )));
   }
 
-  void _inputUsuario(String email, String password) async {
+  Future<void> _inputUsuario(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
-            .then((value) => {postDetailsToFirestore()})
+            .then((valor) => {postDetailsToFirestore()})
             .catchError((e) {
           Fluttertoast.showToast(msg: e!.message);
+          // ignore: invalid_return_type_for_catch_error
+          return Future.error(seconderror());
         });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -391,3 +412,5 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
         });
   }
 }
+
+class seconderror {}

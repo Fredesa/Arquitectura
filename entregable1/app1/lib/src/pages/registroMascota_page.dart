@@ -1,7 +1,10 @@
 // ignore_for_file: camel_case_types, use_key_in_widget_constructors, file_names, prefer_const_declarations, prefer_const_constructors, prefer_final_fields
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class registroMascotaPage extends StatefulWidget {
@@ -13,12 +16,13 @@ class registroMascotaPage extends StatefulWidget {
 class _registroMascotaPageState extends State<registroMascotaPage> {
   final picker = ImagePicker();
   var pickedFile;
-
-  String _nombre = "";
-  String _edad = "";
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  final _nombre = TextEditingController();
+  final _edad = TextEditingController();
   String _raza = "Affenpinscher";
   String _caracter = "Docil";
-  String _afeccion = "";
+  final _afeccion = TextEditingController();
 
   List<String> _listaRazas = [
     "Affenpinscher",
@@ -401,9 +405,15 @@ class _registroMascotaPageState extends State<registroMascotaPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               textCapitalization: TextCapitalization.sentences,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingresa el nombre de tu mascota';
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -422,7 +432,7 @@ class _registroMascotaPageState extends State<registroMascotaPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _nombre = valor;
+                  _nombre.text = valor;
                 });
               },
             )));
@@ -432,9 +442,15 @@ class _registroMascotaPageState extends State<registroMascotaPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               textCapitalization: TextCapitalization.sentences,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingresar el estado de tu mascota, si no posee ninguna afeccion escribe no aplica';
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -453,7 +469,7 @@ class _registroMascotaPageState extends State<registroMascotaPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _afeccion = valor;
+                  _afeccion.text = valor;
                 });
               },
             )));
@@ -463,9 +479,15 @@ class _registroMascotaPageState extends State<registroMascotaPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingresar la edad de tu mascota';
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -484,45 +506,32 @@ class _registroMascotaPageState extends State<registroMascotaPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _edad = valor;
+                  _edad.text = valor;
                 });
               },
             )));
   }
 
-  _inputMascota() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Datos'),
-                Text('El nombre de la mascota es : $_nombre'),
-                Text('La edad de la mascota es : $_edad'),
-                Text('La raza de tu mascota es : $_raza'),
-                Text('El caracter de la mascota es : $_caracter'),
-                Text('Las afecciones de tu mascota son es : $_afeccion')
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-                style: TextButton.styleFrom(primary: Colors.orange[900]),
-                child: Text('Registrarse'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'recorrido');
-                }),
-          ],
-        );
-      },
-    );
+  _inputMascota() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    await firebaseFirestore
+        .collection("usuarios")
+        .doc(user!.uid)
+        .collection('mascotas')
+        .doc()
+        .set({
+      "uid": user.uid,
+      "nombreMascota": _nombre.text,
+      "edadMascota": _edad.text,
+      "razaMascota": _raza,
+      "caracterMascota": _caracter,
+      "afeccionMascota": _afeccion.text
+    }).then((uid) => {
+              Fluttertoast.showToast(msg: "Registro de Mascota Exitoso"),
+              Navigator.pushNamed(context, 'menuPrincipal'),
+            });
   }
 
   Widget _inputRaza() {

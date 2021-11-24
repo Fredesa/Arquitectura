@@ -43,7 +43,8 @@ class _recorridoPageState extends State<recorridoPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0)),
             title: Text('Confirmacion'),
-            content: Column(
+            content: SingleChildScrollView(
+                child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 CircleAvatar(
@@ -53,9 +54,13 @@ class _recorridoPageState extends State<recorridoPage> {
                 ),
                 SizedBox(height: size.height * 0.05),
                 Text('A continuacion observara los datos del paseador :'),
+                SizedBox(height: 20),
                 Text('Nombre del Paseador : $_nombrePaseador'),
+                SizedBox(height: 20),
                 Text('Razas que maneja: $_razasManejadas'),
+                SizedBox(height: 20),
                 Text('Horario : $_horarioManejo'),
+                SizedBox(height: 20),
                 Text('Actividades que realiza : $_actividades'),
                 SizedBox(height: size.height * 0.05),
                 _escogerMascota(),
@@ -83,7 +88,7 @@ class _recorridoPageState extends State<recorridoPage> {
                   ),
                 )
               ],
-            ),
+            )),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(primary: Colors.orange[900]),

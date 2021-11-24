@@ -78,14 +78,17 @@ class _inicioPageState extends State<inicioPage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           title: Text('Ingresar'),
           content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Divider(),
-                _inputId(),
-                Divider(),
-                _inputPassword(),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Divider(),
+                  _inputId(),
+                  Divider(),
+                  _inputPassword(),
+                ],
+              ),
             ),
           ),
           actions: <Widget>[
@@ -93,7 +96,7 @@ class _inicioPageState extends State<inicioPage> {
                 style: TextButton.styleFrom(primary: Colors.orange[900]),
                 child: Text('Ingresar'),
                 onPressed: () {
-                  _inputUsuario();
+                  signIn(emailController.text, passwordController.text);
                 }),
           ],
         );
@@ -178,8 +181,8 @@ class _inicioPageState extends State<inicioPage> {
           borderSide: BorderSide(color: Colors.orange),
           borderRadius: BorderRadius.circular(20.0),
         ),
-        hintText: 'Numero de Identificacion',
-        labelText: 'Identificacion',
+        hintText: 'Correo Electronico',
+        labelText: 'Correo',
         icon: Icon(
           Icons.account_circle,
           color: Colors.orange[900],
@@ -217,8 +220,8 @@ class _inicioPageState extends State<inicioPage> {
           borderSide: BorderSide(color: Colors.orange),
           borderRadius: BorderRadius.circular(20.0),
         ),
-        hintText: 'Password',
-        labelText: 'Password',
+        hintText: 'Contraseña',
+        labelText: 'Contraseña',
         icon: Icon(
           Icons.lock,
           color: Colors.orange[900],
@@ -240,9 +243,7 @@ class _inicioPageState extends State<inicioPage> {
       child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            signIn(emailController.text, passwordController.text);
-          },
+          onPressed: () {},
           child: Text(
             "Login",
             textAlign: TextAlign.center,
@@ -259,7 +260,7 @@ class _inicioPageState extends State<inicioPage> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
-                  login(),
+                  Navigator.pushNamed(context, 'menuPrincipal')
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -292,35 +293,36 @@ class _inicioPageState extends State<inicioPage> {
   }
 }
 
-class login extends StatefulWidget {
-  @override
-  _loginState createState() => _loginState();
-}
+// class login extends StatefulWidget {
+//   @override
+//   _loginState createState() => _loginState();
+// }
 
-class _loginState extends State<login> {
-  User? user = FirebaseAuth.instance.currentUser;
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("usuarios")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      if (value.get('rol') == 'usuario' && value.get('idMascota') == "") {
-        Navigator.pushNamed(context, 'registroCompleto');
-      } else if (value.get('rol') == 'usuario') {
-        Navigator.pushNamed(context, 'menuUsuario');
-      } else if (value.get('rol') == 'paseador' && value.get('')) {
-        Navigator.pushNamed(context, 'menuPaseador');
-      }
+// class _loginState extends State<login> {
+//   User? user = FirebaseAuth.instance.currentUser;
+//   @override
+//   void initState() {
+//     super.initState();
+//     FirebaseFirestore.instance
+//         .collection("usuarios")
+//         .doc(user!.uid)
+//         .get()
+//         .then((value) {
+//       print(value);
+//       if (value.get('rol') == 'usuario' && value.get('idMascota') == "") {
+//         Navigator.pushNamed(context, 'registroCompleto');
+//       } else if (value.get('rol') == 'usuario') {
+//         Navigator.pushNamed(context, 'menuUsuario');
+//       } else if (value.get('rol') == 'paseador' && value.get('')) {
+//         Navigator.pushNamed(context, 'menuPaseador');
+//       }
 
-      setState(() {});
-    });
-  }
+//       setState(() {});
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
