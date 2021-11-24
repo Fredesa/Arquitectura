@@ -71,6 +71,21 @@ class menuPrincipalPage extends StatelessWidget {
                 style: TextStyle(fontSize: 24),
               ),
               onPressed: () => Navigator.pushNamed(context, 'recorrido'),
+            ),
+            SizedBox(height: size.height * 0.02),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.orange,
+                  onPrimary: Colors.black,
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  side: BorderSide(color: Colors.black),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))),
+              child: Text(
+                'Listar Mascotas',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () => Navigator.pushNamed(context, 'listarMascota'),
             )
           ]),
     );

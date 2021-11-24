@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class enciclopediaPage extends StatelessWidget {
+class listarMascotaPage extends StatelessWidget {
+  static final String routeName = 'listarMascota';
   final db = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   @override
@@ -19,7 +20,6 @@ class enciclopediaPage extends StatelessWidget {
           },
         ),
         title: Text("Tus Mascotas"),
-        backgroundColor: Colors.deepPurple,
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -39,8 +39,9 @@ class enciclopediaPage extends StatelessWidget {
                 return Card(
                   child: ListTile(
                     title: Text(doc['nombreMascota']),
-                    trailing: Icon(Icons.keyboard_arrow_right,
-                        color: Colors.deepPurple),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                    ),
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -69,7 +70,6 @@ class _detailPageState extends State<detailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.post.get("nombreMascota")),
-        backgroundColor: Colors.deepPurple,
         centerTitle: true,
       ),
       body: Container(
@@ -90,7 +90,7 @@ class _detailPageState extends State<detailPage> {
                 ),
                 SizedBox(height: 100),
                 Center(
-                  child: Text("Edad: ${widget.post.get("laboratorio")}",
+                  child: Text("Edad: ${widget.post.get("edadMascota")}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -100,7 +100,7 @@ class _detailPageState extends State<detailPage> {
                 ),
                 SizedBox(height: 35),
                 Center(
-                  child: Text("Raza: ${widget.post.get("formafarmaceutica")}",
+                  child: Text("Raza: ${widget.post.get("razaMascota")}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -111,7 +111,7 @@ class _detailPageState extends State<detailPage> {
                 SizedBox(height: 35),
                 Center(
                   child: Text(
-                      "Tipo de Caracter: ${widget.post.get("viaadministracion")}",
+                      "Tipo de Caracter: ${widget.post.get("caracterMascota")}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -121,17 +121,7 @@ class _detailPageState extends State<detailPage> {
                 ),
                 SizedBox(height: 35),
                 Center(
-                  child: Text("Afeccion: ${widget.post.get("unidadmedida")}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.normal,
-                      )),
-                ),
-                SizedBox(height: 35),
-                Center(
-                  child: Text("cantidad: ${widget.post.get("cantidad")}",
+                  child: Text("Afeccion: ${widget.post.get("afeccionMascota")}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
