@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "236623998609",
+    "project_id": "walkdog-34ce3",
+    "storage_bucket": "walkdog-34ce3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236623998609:android:8ee54df77e37bb37235930",
+        "android_client_info": {
+          "package_name": "com.example.app1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236623998609-no4m9afmogh4ifesu7dllamuq0audkee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHgUdfO8V0ahQnl4QhEuFMLNEeXHEci7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236623998609-no4m9afmogh4ifesu7dllamuq0audkee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

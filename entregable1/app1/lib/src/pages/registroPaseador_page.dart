@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, use_key_in_widget_constructors, file_names, prefer_const_declarations, prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class registroPaseadorPage extends StatefulWidget {
@@ -9,12 +10,16 @@ class registroPaseadorPage extends StatefulWidget {
 }
 
 class _registroPaseadorPageState extends State<registroPaseadorPage> {
-  String _identificacion = "";
-  String _telefono = "";
-  String _nombre = "";
-  String _email = "";
-  String _password = "";
-  String _password2 = "";
+  String? errorMessage;
+
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  final _identificacion = TextEditingController();
+  final _telefono = TextEditingController();
+  final _nombre = TextEditingController();
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _password2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

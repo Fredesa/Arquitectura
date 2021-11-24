@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, camel_case_types, prefer_final_fields, unused_field, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class recorridoPage extends StatefulWidget {

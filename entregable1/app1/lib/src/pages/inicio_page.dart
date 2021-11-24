@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_declarations, camel_case_types
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class inicioPage extends StatefulWidget {
   @override
@@ -9,13 +12,20 @@ class inicioPage extends StatefulWidget {
 }
 
 class _inicioPageState extends State<inicioPage> {
-  String _identificacion = "";
-  String _password = "";
+  final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+  final b1 = FirebaseFirestore.instance;
+  String? errorMessage;
+
+  final emailController = new TextEditingController();
+  final passwordController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-        child: Column(
+    return Scaffold(
+        body: Center(
+            child: SingleChildScrollView(
+                child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         SizedBox(height: size.height * 0.05),
@@ -55,7 +65,7 @@ class _inicioPageState extends State<inicioPage> {
           onPressed: () => _registro(),
         )
       ],
-    ));
+    ))));
   }
 
   _login(BuildContext context) {
@@ -142,9 +152,20 @@ class _inicioPageState extends State<inicioPage> {
   }
 
   _inputId() {
-    return TextField(
+    return TextFormField(
       autofocus: true,
+      controller: emailController,
       textCapitalization: TextCapitalization.sentences,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return ("Please Enter Your Email");
+        }
+        // reg expression for email validation
+        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+          return ("Please Enter a valid email");
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelStyle: TextStyle(
           color: Colors.orange[900],
@@ -166,15 +187,25 @@ class _inicioPageState extends State<inicioPage> {
       ),
       onChanged: (valor) {
         setState(() {
-          _identificacion = valor;
+          emailController.text = valor;
         });
       },
     );
   }
 
   _inputPassword() {
-    return TextField(
+    return TextFormField(
       obscureText: true,
+      controller: passwordController,
+      validator: (value) {
+        RegExp regex = new RegExp(r'^.{6,}$');
+        if (value!.isEmpty) {
+          return ("Password is required for login");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Enter Valid Password(Min. 6 Character)");
+        }
+      },
       decoration: InputDecoration(
         labelStyle: TextStyle(
           color: Colors.orange[900],
@@ -195,40 +226,101 @@ class _inicioPageState extends State<inicioPage> {
       ),
       onChanged: (valor) {
         setState(() {
-          _password = valor;
+          passwordController.text = valor;
         });
       },
     );
   }
 
   _inputUsuario() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Datos'),
-                Text('El usuario es : $_identificacion'),
-                Text('Su password es : $_password'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-                style: TextButton.styleFrom(primary: Colors.orange[900]),
-                child: Text('cerrar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-          ],
-        );
-      },
+    Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.redAccent,
+      child: MaterialButton(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          minWidth: MediaQuery.of(context).size.width,
+          onPressed: () {
+            signIn(emailController.text, passwordController.text);
+          },
+          child: Text(
+            "Login",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+          )),
     );
+  }
+
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+                  Fluttertoast.showToast(msg: "Login Successful"),
+                  login(),
+                });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+}
+
+class login extends StatefulWidget {
+  @override
+  _loginState createState() => _loginState();
+}
+
+class _loginState extends State<login> {
+  User? user = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("usuarios")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      if (value.get('rol') == 'usuario' && value.get('idMascota') == "") {
+        Navigator.pushNamed(context, 'registroCompleto');
+      } else if (value.get('rol') == 'usuario') {
+        Navigator.pushNamed(context, 'menuUsuario');
+      } else if (value.get('rol') == 'paseador' && value.get('')) {
+        Navigator.pushNamed(context, 'menuPaseador');
+      }
+
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

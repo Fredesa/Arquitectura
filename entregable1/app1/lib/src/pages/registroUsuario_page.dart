@@ -1,6 +1,10 @@
 // ignore_for_file: camel_case_types, use_key_in_widget_constructors, file_names, prefer_const_declarations, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class registroUsuarioPage extends StatefulWidget {
   @override
@@ -9,13 +13,17 @@ class registroUsuarioPage extends StatefulWidget {
 }
 
 class _registroUsuarioPageState extends State<registroUsuarioPage> {
-  String _identificacion = "";
-  String _telefono = "";
-  String _nombre = "";
-  String _email = "";
-  String _direccion = "";
-  String _password = "";
-  String _password2 = "";
+  String? errorMessage;
+
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  final identificacionController = TextEditingController();
+  final telefonoController = TextEditingController();
+  final nombreController = TextEditingController();
+  final emailController = TextEditingController();
+  final direccionController = TextEditingController();
+  final passwordController = TextEditingController();
+  final password2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,24 +50,26 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
           _inputPassword2(),
           SizedBox(height: size.height * 0.02),
           Center(
-            child: SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.black,
-                    primary: Colors.orange,
-                    side: BorderSide(color: Colors.black),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                child: Text(
-                  'Registrarte',
-                  style: TextStyle(fontSize: 24),
-                ),
-                onPressed: () => _inputUsuario(),
+              child: SizedBox(
+            width: 300,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  onPrimary: Colors.black,
+                  primary: Colors.orange,
+                  side: BorderSide(color: Colors.black),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))),
+              child: Text(
+                'Registrarte',
+                style: TextStyle(fontSize: 24),
+              ),
+              onPressed: () => _inputUsuario(
+                emailController.text,
+                passwordController.text,
               ),
             ),
-          )
+          ))
         ],
       ),
     );
@@ -69,9 +79,19 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               keyboardType: TextInputType.number,
+              validator: (value) {
+                RegExp regex = RegExp(r'^.{3,}$');
+                if (value!.isEmpty) {
+                  return ("First Name cannot be Empty");
+                }
+                if (!regex.hasMatch(value)) {
+                  return ("Enter Valid name(Min. 3 Character)");
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -90,7 +110,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _identificacion = valor;
+                  identificacionController.text = valor;
                 });
               },
             )));
@@ -100,9 +120,16 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
+              controller: nombreController,
               textCapitalization: TextCapitalization.sentences,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingresar tu nombre completo';
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -121,7 +148,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _nombre = valor;
+                  nombreController.text = valor;
                 });
               },
             )));
@@ -131,9 +158,20 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               keyboardType: TextInputType.phone,
+              controller: telefonoController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*$')),
+                LengthLimitingTextInputFormatter(10)
+              ],
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Por favor ingresar tu telefono';
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -152,7 +190,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _telefono = valor;
+                  telefonoController.text = valor;
                 });
               },
             )));
@@ -162,9 +200,20 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return ("Por favor ingresa tu correo");
+                }
+                // reg expression for email validation
+                if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                    .hasMatch(value)) {
+                  return ("Por favor ingresa un correo valido");
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -183,7 +232,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _email = valor;
+                  emailController.text = valor;
                 });
               },
             )));
@@ -193,7 +242,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               autofocus: true,
               keyboardType: TextInputType.streetAddress,
               decoration: InputDecoration(
@@ -214,7 +263,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _direccion = valor;
+                  direccionController.text = valor;
                 });
               },
             )));
@@ -224,7 +273,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               obscureText: true,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
@@ -244,7 +293,7 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _password = valor;
+                  passwordController.text = valor;
                 });
               },
             )));
@@ -254,8 +303,14 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
     return Center(
         child: SizedBox(
             width: 300,
-            child: TextField(
+            child: TextFormField(
               obscureText: true,
+              validator: (value) {
+                if (password2Controller.text != passwordController.text) {
+                  return "Password don't match";
+                }
+                return null;
+              },
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -274,46 +329,65 @@ class _registroUsuarioPageState extends State<registroUsuarioPage> {
               ),
               onChanged: (valor) {
                 setState(() {
-                  _password2 = valor;
+                  password2Controller.text = valor;
                 });
               },
             )));
   }
 
-  _inputUsuario() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Datos'),
-                Text('El usuario es : $_identificacion'),
-                Text('El telefono del usuario es : $_telefono'),
-                Text('El nombre del usuario es : $_nombre'),
-                Text('El correo del usuario es : $_email'),
-                Text('La direccion del usuario es : $_direccion'),
-                Text('Su password es : $_password'),
-                Text('La repeticion de su password es : $_password2')
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-                style: TextButton.styleFrom(primary: Colors.orange[900]),
-                child: Text('Registrarse'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'registroMascota');
-                }),
-          ],
-        );
-      },
-    );
+  void _inputUsuario(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+
+  postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    await firebaseFirestore.collection("usuarios").doc(user!.uid).set({
+      "uid": user.uid,
+      "identificacion": identificacionController.text,
+      "telefono": telefonoController.text,
+      "nombre": nombreController.text,
+      "email": emailController.text,
+      "direccion": direccionController.text,
+      "rol": "usuario"
+    }).then((uid) => {
+          Fluttertoast.showToast(msg: "Registro Exitoso"),
+          Navigator.pushNamed(context, 'inicio'),
+        });
   }
 }

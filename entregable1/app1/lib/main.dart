@@ -5,11 +5,17 @@ import 'package:app1/src/pages/recorrido_page.dart';
 import 'package:app1/src/pages/registroCompleto_page.dart';
 import 'package:app1/src/pages/registroMascota_page.dart';
 import 'package:app1/src/pages/registroPaseador_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:app1/src/pages/inicio_page.dart';
 import 'package:app1/src/pages/registroUsuario_page.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
