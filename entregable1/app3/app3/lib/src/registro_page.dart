@@ -18,6 +18,10 @@ class _RegistroScreenState extends State<RegistroPage> {
 
   // editing controller
   final TextEditingController registroController = new TextEditingController();
+  final TextEditingController ritmoController = new TextEditingController();
+  final TextEditingController tensionController = new TextEditingController();
+  final TextEditingController temperaturaController =
+      new TextEditingController();
 
   // firebase
   final _auth = FirebaseAuth.instance;
@@ -60,12 +64,41 @@ class _RegistroScreenState extends State<RegistroPage> {
           ),
         ));
 
+    final temperaturaField = TextFormField(
+        autofocus: false,
+        controller: registroController,
+        keyboardType: TextInputType.text,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Por favor escribe tu temperatura actual");
+          }
+        },
+        onSaved: (value) {
+          temperaturaController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.health_and_safety),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Temperatura",
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepPurple, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
     Future<void> addRegistro() {
       return db.add({
         "idUsuario": user!.uid,
         "fechaCreacion": dia,
         "horaRegistro": now,
         "estadoSalud": registroController.text,
+        "ritmoCardiaco": ritmoController.text,
+        "tension": tensionController.text,
+        'temperatura': temperaturaController.text
       }).then((uid) => {
             Fluttertoast.showToast(msg: "Registro Exitoso"),
             Navigator.of(context)
@@ -73,6 +106,57 @@ class _RegistroScreenState extends State<RegistroPage> {
           });
     }
 
+    final ritmoField = TextFormField(
+        autofocus: false,
+        controller: registroController,
+        keyboardType: TextInputType.text,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Por favor escribe tu ritmo cardiado");
+          }
+        },
+        onSaved: (value) {
+          ritmoController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.health_and_safety),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Ritmo Cardiaco",
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepPurple, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
+    final tensionField = TextFormField(
+        autofocus: false,
+        controller: registroController,
+        keyboardType: TextInputType.text,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Por favor escribe tu tension actual");
+          }
+        },
+        onSaved: (value) {
+          tensionController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.health_and_safety),
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Tension",
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.deepPurple, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
     final RegistroButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
