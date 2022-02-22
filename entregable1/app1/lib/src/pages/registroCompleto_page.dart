@@ -1,7 +1,10 @@
 // ignore_for_file: camel_case_types, use_key_in_widget_constructors, file_names, prefer_const_declarations, prefer_const_constructors, prefer_final_fields
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class registroCompletoPage extends StatefulWidget {
@@ -14,6 +17,8 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
   final picker = ImagePicker();
   var pickedFile;
 
+  final _auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
   String _barrio = "Managua";
   String _horaInicio = "";
   String _horaFinal = "";
@@ -338,47 +343,48 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
           title: Text('Completar Registro Cuidador'),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-          child: Column(
-            children: [
-              SizedBox(height: size.height * 0.05),
-              _inputBarrio(),
-              SizedBox(height: size.height * 0.05),
-              _inputHoraInicio(),
-              SizedBox(height: size.height * 0.05),
-              _inputHoraFinal(),
-              SizedBox(height: size.height * 0.05),
-              _inputRaza(),
-              SizedBox(height: size.height * 0.05),
-              _inputActividad(),
-              SizedBox(height: size.height * 0.05),
-              Text('Ingresar una foto tuya'),
-              SizedBox(height: size.height * 0.02),
-              _inputImagen(),
-              SizedBox(height: size.height * 0.05),
-              Center(
-                child: SizedBox(
-                  width: 300,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        onPrimary: Colors.black,
-                        primary: Colors.orange,
-                        side: BorderSide(color: Colors.black),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: Text(
-                      'Completar Registro',
-                      style: TextStyle(fontSize: 24),
+            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+            child: Form(
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * 0.05),
+                  _inputBarrio(),
+                  SizedBox(height: size.height * 0.05),
+                  _inputHoraInicio(),
+                  SizedBox(height: size.height * 0.05),
+                  _inputHoraFinal(),
+                  SizedBox(height: size.height * 0.05),
+                  _inputRaza(),
+                  SizedBox(height: size.height * 0.05),
+                  _inputActividad(),
+                  SizedBox(height: size.height * 0.05),
+                  Text('Ingresar una foto tuya'),
+                  SizedBox(height: size.height * 0.02),
+                  _inputImagen(),
+                  SizedBox(height: size.height * 0.05),
+                  Center(
+                    child: SizedBox(
+                      width: 300,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            onPrimary: Colors.black,
+                            primary: Colors.orange,
+                            side: BorderSide(color: Colors.black),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 20),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          'Completar Registro',
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        onPressed: () => _inputFormularioCompleto(),
+                      ),
                     ),
-                    onPressed: () => _inputFormularioCompleto(),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
+                  )
+                ],
+              ),
+            )));
   }
 
   Future selImagen() async {
@@ -508,7 +514,7 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
             width: 300,
             child: TextField(
               autofocus: true,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.datetime,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -538,7 +544,7 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
             width: 300,
             child: TextField(
               autofocus: true,
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.datetime,
               decoration: InputDecoration(
                 labelStyle: TextStyle(
                   color: Colors.orange[900],
@@ -562,39 +568,20 @@ class _registroCompletoPageState extends State<registroCompletoPage> {
             )));
   }
 
-  _inputFormularioCompleto() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('Datos'),
-                Text('El barrio en que trabajas es : $_barrio'),
-                Text('Tu hora de Inicio es : $_horaInicio'),
-                Text('Tu hora de Cierre es : $_horaFinal'),
-                Text('Las razas que manejas son : $_raza'),
-                Text('Las actividades que realizas son : $_actividad'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-                style: TextButton.styleFrom(primary: Colors.orange[900]),
-                child: Text('Completar Registro'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'confirmacion');
-                }),
-          ],
-        );
-      },
-    );
+  _inputFormularioCompleto() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    await firebaseFirestore.collection("usuarios").doc(user!.uid).set({
+      "barrio": _barrio,
+      "horaInicion": _horaFinal,
+      "horaFinal": _horaFinal,
+      "razaManejo": _raza,
+      "actividad": _actividad,
+    }).then((uid) => {
+          Fluttertoast.showToast(msg: "Registro Completado Exitosamente"),
+          Navigator.pushNamed(context, 'menuPrincipal'),
+        });
   }
 
   Widget _inputRaza() {

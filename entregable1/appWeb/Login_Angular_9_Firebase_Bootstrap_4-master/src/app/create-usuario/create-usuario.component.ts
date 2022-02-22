@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreateUsuarioComponent implements OnInit {
 
-  private authSvc: AuthService;
+
   createUsuario: FormGroup;
   submitted = false;
   loading = false;
@@ -23,6 +23,7 @@ export class CreateUsuarioComponent implements OnInit {
   titulo = 'Agregar Usuario';
 
   constructor(private fb: FormBuilder,
+    private authSvc: AuthService,
     private _usuarioService: UsuarioService,
     private router: Router,
     private toastr: ToastrService,
@@ -31,7 +32,7 @@ export class CreateUsuarioComponent implements OnInit {
       nombre: ['', Validators.required],
       edad: ['', Validators.required],
       identificacion: ['', Validators.required],
-      idMedico: [''],
+      idMedico: ['', Validators.required],
       rol: ['', Validators.required],
       idTratamiento:[''],
       password: ['', Validators.required],
@@ -44,7 +45,7 @@ export class CreateUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.esEditar();
+    this.agregarEditarUsuario();
   }
 
   agregarEditarUsuario() {
@@ -78,14 +79,14 @@ export class CreateUsuarioComponent implements OnInit {
 
       console.log(usuario)
       this.loading = true;
-      this.authSvc.register(this.createUsuario.value.correo, this.createUsuario.value.password)
-      this._usuarioService.agregarUsuario(usuario).then(() => {         
+      this.authSvc.register(usuario.correo, usuario.password)
+      this._usuarioService.agregarUsuario(usuario).then(() => {
         this.toastr.success('El usuario fue registrado con exito!', 'Usuario Registrado', {
           positionClass: 'toast-bottom-right'
         });
 
         this.loading = false;
-        this.router.navigate(['/list-usuarios']);
+        this.router.navigate(['/list-users2']);
       }).catch(error => {
         console.log(error);
         this.loading = false;

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class ejemploPage extends StatefulWidget {
   static final String routeName = 'ejemplo';
@@ -12,11 +13,9 @@ class ejemploPage extends StatefulWidget {
 class _ejemploPageState extends State<ejemploPage> {
   final Set<Marker> _markers = Set();
   final double _zoom = 10;
-  CameraPosition _initialPosition =
-      CameraPosition(target: LatLng(4.6813, -74.0451));
+  Location location = new Location();
   MapType _defaultMapType = MapType.normal;
   Completer<GoogleMapController> _controller = Completer();
-
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
@@ -33,10 +32,9 @@ class _ejemploPageState extends State<ejemploPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Maps in Flutter'),
+        title: Text('Mapa'),
         centerTitle: true,
       ),
-      drawer: _drawer(),
       body: Stack(
         children: <Widget>[
           GoogleMap(
@@ -45,7 +43,8 @@ class _ejemploPageState extends State<ejemploPage> {
             myLocationEnabled: true,
             onMapCreated: _onMapCreated,
             myLocationButtonEnabled: true,
-            initialCameraPosition: _initialPosition,
+            initialCameraPosition:
+                CameraPosition(target: LatLng(4.6813, -74.0451), zoom: 15),
           ),
           Container(
             margin: EdgeInsets.only(top: 80, right: 10),

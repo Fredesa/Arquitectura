@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.app1">
-    <uses-permission android:name=”android.permission.ACCESS_FINE_LOCATION” />
+    package="com.example.app1"> 
    <application
         android:label="app1"
         android:icon="@mipmap/ic_launcher">

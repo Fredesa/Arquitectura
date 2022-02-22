@@ -61,6 +61,16 @@ export class AuthService {
       console.log(error);
     }
   }
+  async getStatus(){
+    try{
+      return this.afAuth.authState;
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+
 
   async logout(): Promise<void> {
     try {
