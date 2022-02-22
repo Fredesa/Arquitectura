@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app1/src/pages/confirmacion_page.dart';
+<<<<<<< Updated upstream
 import 'package:app1/src/pages/listarMascota_page.dart';
 import 'package:app1/src/pages/menuPrincipal_page.dart';
+=======
+import 'package:app1/src/pages/ejemplo.dart';
+>>>>>>> Stashed changes
 import 'package:app1/src/pages/recorrido_page.dart';
 import 'package:app1/src/pages/registroCompleto_page.dart';
 import 'package:app1/src/pages/registroMascota_page.dart';
@@ -33,6 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         routes: {
+          ejemploPage.routeName: (BuildContext context) => ejemploPage(),
           inicioPage.routeName: (BuildContext context) => inicioPage(),
           listarMascotaPage.routeName: (BuildContext context) =>
               listarMascotaPage(),

@@ -236,6 +236,7 @@ class _inicioPageState extends State<inicioPage> {
   }
 
   _inputUsuario() {
+<<<<<<< Updated upstream
     Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -250,6 +251,35 @@ class _inicioPageState extends State<inicioPage> {
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           )),
+=======
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('Datos'),
+                Text('El usuario es : $_identificacion'),
+                Text('Su password es : $_password'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                style: TextButton.styleFrom(primary: Colors.orange[900]),
+                child: Text('cerrar'),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'ejemplo');
+                }),
+          ],
+        );
+      },
+>>>>>>> Stashed changes
     );
   }
 
