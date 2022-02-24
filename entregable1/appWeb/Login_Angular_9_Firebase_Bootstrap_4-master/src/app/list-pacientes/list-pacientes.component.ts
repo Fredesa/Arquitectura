@@ -13,7 +13,7 @@ import { UsuarioService } from 'src/app/services/Usuario.service';
   styleUrls: ['./list-Pacientes.component.css']
 })
 export class ListPacientesComponent implements OnInit {
-  Doctor: any[] = [];
+
   usuarios: any[] = [];
   id
 
@@ -24,7 +24,6 @@ export class ListPacientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPacientes()
-    this.getUsuarios()
   }
 
   async getPacientes(){
@@ -32,8 +31,7 @@ export class ListPacientesComponent implements OnInit {
      status => {
         this._pacienteService.getUsuario(status.uid).subscribe(
           data => {
-            this.id = data.payload.data()['idMedico']
-
+            this.id = data.payload.data()['identificacion']
             console.log(this.id)
             this.firestore.collection('usuarios', ref => ref.where('idMedico','==',this.id)).snapshotChanges().subscribe(
               data => {
@@ -44,36 +42,12 @@ export class ListPacientesComponent implements OnInit {
                     ...element.payload.doc.data()
                   })
                 });
-                console.log(this.usuarios);
               }
             )
           }
         )
       }
     )
-  }
-  getUsuarios() {
-    this._pacienteService.getUsuarios().subscribe(data => {
-      this.usuarios = [];
-      data.forEach((element: any) => {
-        this.usuarios.push({
-          id: element.payload.doc.id,
-          ...element.payload.doc.data()
-        })
-      });
-      console.log(this.usuarios);
-    });
-  }
-
-  eliminarPaciente(id: string) {
-    this._pacienteService.eliminarUsuario(id).then(() => {
-      console.log('empelado eliminado con exito');
-      this.toastr.error('El Paciente fue eliminado con exito', 'Registro eliminado!', {
-        positionClass: 'toast-bottom-right'
-      });
-    }).catch(error => {
-      console.log(error);
-    })
   }
 
 }

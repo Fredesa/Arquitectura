@@ -18,13 +18,18 @@ export class LoginComponent {
 
   async onLogin() {
     const { email, password } = this.loginForm.value;
-    if (email == "admin@admin.com" && password == "admin"){
+    if (email == "admin@admin.com" && password == "admin1"){
       this.router.navigate(['/home2'])
     }else{
       try {
         const user = await this.authSvc.login(email, password);
         if (user) {
-          this.router.navigate(['/home'])
+          if (user.uid == "185s8zyv06a5VmwgXVKY5z5eiAn1"){
+            this.router.navigate(['/home2'])
+          }else{
+            this.router.navigate(['/home'])
+          }
+
         }
       } catch (error) {
         console.log(error);

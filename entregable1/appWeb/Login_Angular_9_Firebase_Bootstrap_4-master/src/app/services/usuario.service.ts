@@ -22,6 +22,10 @@ export class UsuarioService {
     return this.firestore.collection('usuarios').snapshotChanges();
   }
 
+  getDoctores(): Observable<any> {
+    return this.firestore.collection('usuarios', ref => ref.where('rol','==','Medico')).snapshotChanges();
+  }
+
   eliminarUsuario(id: string): Promise<any> {
     return this.firestore.collection('usuarios').doc(id).delete();
   }

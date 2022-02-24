@@ -16,12 +16,12 @@
                             placeholder="Edad">
                         <input type="number" class="form-control form-control-lg mt-3" formControlName="identificacion"
                             placeholder="Nro de Identificacion">
-                        <input type="number" class="form-control form-control-lg mt-3" formControlName="idMedico"
-                            placeholder="Nro de Identificacion del Medico">
-                        <input type="text" class="form-control form-control-lg mt-3" formControlName="rol"
-                            placeholder="Rol">
-                        <input type="text" class="form-control form-control-lg mt-3" formControlName="idTratamiento"
-                            placeholder="Nro de Tratamiento">
+                            <label class="mt-4" for="doctor">Seleccione Medico Asignado</label>
+                        <select class="form-control form-control-lg mt-3" type="number" formControlName="idMedico" name="doctor">
+                              <option *ngFor="let usuario of usuarios" [value]="usuario.identificacion">
+                                {{usuario.identificacion}}
+                              </option>
+                            </select>
                         <input type="password" class="form-control form-control-lg mt-3" formControlName="password"
                             placeholder="Contraseña">
                         <input type="password" class="form-control form-control-lg mt-3" formControlName="passwordtwo"
@@ -29,6 +29,7 @@
                         <input type="email" class="form-control form-control-lg mt-3" formControlName="correo"
                             placeholder="Correo Electronico">
                         <div class="mt-3">
+                            <button onclick="console.log(createUsuario)"></button>
                             <button type="text" class="btn btn-secondary btn-lg mr-3"
                                 routerLink="/home">Volver</button>
                             <button type="submit" class="btn btn-primary btn-lg">Agregar</button>
