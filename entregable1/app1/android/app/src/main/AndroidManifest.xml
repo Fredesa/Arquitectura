@@ -1,6 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< Updated upstream
+    package="com.example.app1"> 
+=======
     package="com.example.app1">
     <uses-permission android:name=”android.permission.ACCESS_FINE_LOCATION” />
+    <uses-permission android:name=”android.permission.ACCESS_COARSE_LOCATION” />
+>>>>>>> Stashed changes
    <application
         android:label="app1"
         android:icon="@mipmap/ic_launcher">

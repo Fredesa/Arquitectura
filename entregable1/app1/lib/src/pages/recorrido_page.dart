@@ -16,6 +16,7 @@ class _recorridoPageState extends State<recorridoPage> {
   List<String> _mascotas = ["Firulais", "Pelusa"];
   String _hora = "";
   String _mascota = "Pelusa";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

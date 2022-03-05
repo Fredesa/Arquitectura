@@ -2,6 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+<<<<<<< Updated upstream
+import 'package:location/location.dart';
+=======
+>>>>>>> Stashed changes
 
 class ejemploPage extends StatefulWidget {
   static final String routeName = 'ejemplo';
@@ -12,11 +16,17 @@ class ejemploPage extends StatefulWidget {
 class _ejemploPageState extends State<ejemploPage> {
   final Set<Marker> _markers = Set();
   final double _zoom = 10;
+<<<<<<< Updated upstream
+  Location location = new Location();
+  MapType _defaultMapType = MapType.normal;
+  Completer<GoogleMapController> _controller = Completer();
+=======
   CameraPosition _initialPosition =
       CameraPosition(target: LatLng(4.6813, -74.0451));
   MapType _defaultMapType = MapType.normal;
   Completer<GoogleMapController> _controller = Completer();
 
+>>>>>>> Stashed changes
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
@@ -33,10 +43,16 @@ class _ejemploPageState extends State<ejemploPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< Updated upstream
+        title: Text('Mapa'),
+        centerTitle: true,
+      ),
+=======
         title: Text('Maps in Flutter'),
         centerTitle: true,
       ),
       drawer: _drawer(),
+>>>>>>> Stashed changes
       body: Stack(
         children: <Widget>[
           GoogleMap(
@@ -45,7 +61,12 @@ class _ejemploPageState extends State<ejemploPage> {
             myLocationEnabled: true,
             onMapCreated: _onMapCreated,
             myLocationButtonEnabled: true,
+<<<<<<< Updated upstream
+            initialCameraPosition:
+                CameraPosition(target: LatLng(4.6813, -74.0451), zoom: 15),
+=======
             initialCameraPosition: _initialPosition,
+>>>>>>> Stashed changes
           ),
           Container(
             margin: EdgeInsets.only(top: 80, right: 10),

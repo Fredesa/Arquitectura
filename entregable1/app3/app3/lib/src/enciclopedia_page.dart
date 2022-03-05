@@ -83,6 +83,16 @@ class _detailPageState extends State<detailPage> {
                 ),
                 SizedBox(height: 100),
                 Center(
+                  child: Text("Codigo: ${widget.post.id}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.normal,
+                      )),
+                ),
+                SizedBox(height: 35),
+                Center(
                   child: Text("Laboratorio: ${widget.post.get("laboratorio")}",
                       textAlign: TextAlign.center,
                       style: TextStyle(

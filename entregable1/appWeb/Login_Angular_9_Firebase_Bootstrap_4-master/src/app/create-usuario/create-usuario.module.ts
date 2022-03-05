@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatSelectModule} from '@angular/material/select';
 
 import { CreateUsuarioRoutingModule } from './create-usuario-routing.module';
 import { CreateUsuarioComponent } from './create-usuario.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,9 +13,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CreateUsuarioRoutingModule,
     ReactiveFormsModule,
+    MatSelectModule,
+    FormsModule
   ],
   exports:[
     ReactiveFormsModule,
+
   ]
 })
 export class CreateUsuarioModule { }

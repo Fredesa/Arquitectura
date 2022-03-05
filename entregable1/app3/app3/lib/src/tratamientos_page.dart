@@ -77,10 +77,6 @@ class _detailTratamientoScreenState extends State<detailTratamientoPage> {
 
   @override
   Widget build(BuildContext context) {
-    var diaInicio =
-        DateTime.parse(widget.post.get("fechaInicio").toDate().toString());
-    var diaFin =
-        DateTime.parse(widget.post.get("fechaFin").toDate().toString());
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.post.get("nombre")),
@@ -137,7 +133,8 @@ class _detailTratamientoScreenState extends State<detailTratamientoPage> {
                 ),
                 SizedBox(height: 35),
                 Center(
-                  child: Text("Fecha de Inicio del tratamiento: ${diaInicio}",
+                  child: Text(
+                      "Fecha de Inicio del tratamiento: ${widget.post.get("fechaInicio")}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -147,14 +144,14 @@ class _detailTratamientoScreenState extends State<detailTratamientoPage> {
                 ),
                 SizedBox(height: 35),
                 Center(
-                  child:
-                      Text("Fecha de Finalizacion del tratamiento: ${diaFin}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.normal,
-                          )),
+                  child: Text(
+                      "Fecha de Finalizacion del tratamiento: ${widget.post.get('fechaFin')}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.normal,
+                      )),
                 ),
               ],
             ),

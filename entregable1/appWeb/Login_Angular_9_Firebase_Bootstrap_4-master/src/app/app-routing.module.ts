@@ -1,6 +1,5 @@
 
 import { SendEmailComponent } from '@auth/send-email/send-email.component';
-import { ListUsuariosComponent } from './list-usuarios/list-usuarios.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -8,12 +7,16 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'home2',
+    loadChildren: () => import('./home2/home2.module').then((m) => m.Home2Module),
   },
   {
     path: 'login',
@@ -24,6 +27,11 @@ const routes: Routes = [
     path: 'list-user',
     loadChildren: () =>
       import('./list-usuarios/list-usuarios.module').then((m) => m.ListUsuariosModule),
+  },
+  {
+    path: 'list-user2',
+    loadChildren: () =>
+      import('./list-pacientes/list-pacientes.module').then((m) => m.ListPacientesModule),
   },
   {
     path: 'calendario',

@@ -15,14 +15,17 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreateUsuarioComponent implements OnInit {
 
-  private authSvc: AuthService;
+  usuarios: any[] = [];
+  doctorAsignado: string;
   createUsuario: FormGroup;
   submitted = false;
   loading = false;
   id: string | null;
-  titulo = 'Agregar Usuario';
+  titulo = 'Agregar Paciente';
 
   constructor(private fb: FormBuilder,
+    private firestore: AngularFirestore,
+    private authSvc: AuthService,
     private _usuarioService: UsuarioService,
     private router: Router,
     private toastr: ToastrService,
@@ -31,9 +34,7 @@ export class CreateUsuarioComponent implements OnInit {
       nombre: ['', Validators.required],
       edad: ['', Validators.required],
       identificacion: ['', Validators.required],
-      idMedico: [''],
-      rol: ['', Validators.required],
-      idTratamiento:[''],
+      idMedico: ['', Validators.required],
       password: ['', Validators.required],
       passwordtwo: ['', Validators.required],
       correo: ['', Validators.required]
@@ -44,7 +45,9 @@ export class CreateUsuarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.esEditar();
+    this.getUsuarios();
+    this.agregarEditarUsuario();
+
   }
 
   agregarEditarUsuario() {
@@ -66,32 +69,42 @@ export class CreateUsuarioComponent implements OnInit {
       const usuario: any = {
         edad: this.createUsuario.value.edad,
         identificacion: this.createUsuario.value.identificacion,
-        idMedico: this.createUsuario.value.idMedico,
-        rol: this.createUsuario.value.rol,
-        idTratamiento: this.createUsuario.value.idTratamiento,
+        idMedico: parseInt(this.createUsuario.value.idMedico),
+        rol: "Paciente",
         nombre: this.createUsuario.value.nombre,
         fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
         password:this.createUsuario.value.password,
         correo:  this.createUsuario.value.correo
       }
-
       console.log(usuario)
       this.loading = true;
-      this.authSvc.register(this.createUsuario.value.correo, this.createUsuario.value.password)
-      this._usuarioService.agregarUsuario(usuario).then(() => {         
+      this.authSvc.register(usuario.correo, usuario.password)
+      this._usuarioService.agregarUsuario(usuario).then(() => {
         this.toastr.success('El usuario fue registrado con exito!', 'Usuario Registrado', {
           positionClass: 'toast-bottom-right'
         });
-
         this.loading = false;
-        this.router.navigate(['/list-usuarios']);
+        this.router.navigate(['/list-user']);
       }).catch(error => {
         console.log(error);
         this.loading = false;
       })
+      this.authSvc.login('admin@admin.com','admin1')
     }
 
+  }
+
+  getUsuarios() {
+    this._usuarioService.getDoctores().subscribe(data => {
+      this.usuarios = [];
+      data.forEach((element: any) => {
+        this.usuarios.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data()
+        })
+      });
+      console.log(this.usuarios);
+    });
   }
 
   editarUsuario(id: string) {
@@ -115,23 +128,6 @@ export class CreateUsuarioComponent implements OnInit {
       })
       this.router.navigate(['/list-usuarios']);
     })
-  }
-
-
-  esEditar() {
-    this.titulo = 'Agregar Usuario'
-    if (this.id !== null) {
-      this.loading = true;
-      this._usuarioService.getUsuario(this.id).subscribe(data => {
-        this.loading = false;
-        this.createUsuario.setValue({
-          nombre: data.payload.data()['nombre'],
-          apellido: data.payload.data()['apellido'],
-          documento: data.payload.data()['documento'],
-          salario: data.payload.data()['salario'],
-        })
-      })
-    }
   }
 
 }
