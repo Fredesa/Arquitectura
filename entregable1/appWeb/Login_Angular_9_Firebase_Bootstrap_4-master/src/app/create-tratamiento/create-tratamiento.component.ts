@@ -55,7 +55,7 @@ export class CreateTratamientoComponent implements OnInit {
     }
 
   }
-
+  
   agregarTratamiento() {
     const tratamiento: any = {
       nombre: this.createTratamiento.value.nombre,
@@ -63,8 +63,8 @@ export class CreateTratamientoComponent implements OnInit {
       idPaciente: this.createTratamiento.value.idPaciente,
       tipoAdministracion: this.createTratamiento.value.tipoAdministracion,
       Dosis: this.createTratamiento.value.Dosis,
-      fechaInicio: this.createTratamiento.value.fechaInicio,
-      fechaFin: this.createTratamiento.value.fechaFin,
+      fechaInicio: firebase.f  (new Date(this.createTratamiento.value.fechaInicio)).getTime(),
+      fechaFin: (new Date(this.createTratamiento.value.fechaFin)).getTime(),
     }
     this.loading = true;
     this._tratamientoService.agregarTratamiento(tratamiento).then(() => {
