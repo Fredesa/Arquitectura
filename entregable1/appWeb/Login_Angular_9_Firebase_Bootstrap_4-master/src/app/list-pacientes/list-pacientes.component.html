@@ -1,17 +1,18 @@
-<div class="container mt-4">
+<div class="container ">
     <div class="card">
         <div class="card-body">
-            <span class="h3">Listado de Pacientes</span>
+            <p class="h3" style="text-align: center;">Listado de Pacientes</p>
             <h5 style="margin-top: 30px;" *ngIf="usuarios.length == 0">No hay datos para mostrar</h5>
-            <table *ngIf="usuarios.length > 0" class="table table-bordered mt-5">
+            <div class="table-responsive " style="border-radius: 20px 20px 20px 20px;">
+              <table *ngIf="usuarios.length > 0" class="table table-bordered  w-100">
                 <thead>
                   <tr>
-                    <th>nombre</th>
-                    <th>edad</th>
-                    <th> identificacion</th>
-                    <th>idMedico</th>
-                    <th>rol</th>
-                    <th>idTratamiento</th>
+                    <th>Nombre del Paciente</th>
+                    <th>Edad</th>
+                    <th>Numero de identificacion</th>
+                    <th>id</th>
+                    <th>Tratamientos</th>
+                    <th>Calendario de Salud</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -19,12 +20,13 @@
                    <td>{{ usuario.nombre }}</td>
                     <td>{{ usuario.edad }}</td>
                     <td>{{ usuario.identificacion }}</td>
-                    <td>{{ usuario.idMedico }}</td>
-                    <td>{{ usuario.rol }}</td>
-                    <td>{{ usuario.idTratamiento }}</td>
+                    <td>{{usuario.id}}</td>
+                    <td><button class="btn btn-primary btn-lg float-center" routerLink="/list-tratamiento/{{usuario.id}}">Tratamientos</button></td>
+                    <td><button class="btn btn-primary btn-lg float-center">Calendario</button></td>
                   </tr>
                 </tbody>
               </table>
+            </div>
         </div>
     </div>
     <p></p>

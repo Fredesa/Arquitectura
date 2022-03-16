@@ -5,3 +5,11 @@ thead {
     background-color: rgb(116, 99, 223);
     color: white;
 }
+table {
+  border-radius: 30px;
+  width: 100%;
+}
+
+td{
+  border-radius: 20px;
+}

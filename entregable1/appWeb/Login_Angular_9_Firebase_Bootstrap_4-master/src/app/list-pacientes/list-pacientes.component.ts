@@ -32,7 +32,6 @@ export class ListPacientesComponent implements OnInit {
         this._pacienteService.getUsuario(status.uid).subscribe(
           data => {
             this.id = data.payload.data()['identificacion']
-            console.log(this.id)
             this.firestore.collection('usuarios', ref => ref.where('idMedico','==',this.id)).snapshotChanges().subscribe(
               data => {
                 this.usuarios = [];
@@ -41,6 +40,7 @@ export class ListPacientesComponent implements OnInit {
                     id: element.payload.doc.id,
                     ...element.payload.doc.data()
                   })
+                  console.log(this.usuarios)
                 });
               }
             )

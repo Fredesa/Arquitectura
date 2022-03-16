@@ -16,6 +16,9 @@ export class TratamientoService {
   getTratamientos(): Observable<any> {
     return this.firestore.collection('tratamientos').snapshotChanges();
   }
+  getTratamientosPaciente(id: string): Observable<any> {
+    return this.firestore.collection('usuarios').doc(id).collection('tratamientos').snapshotChanges();
+  }
 
   eliminarTratamiento(id: string): Promise<any> {
     return this.firestore.collection('tratamientos').doc(id).delete();

@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { TratamientoService } from 'src/app/services/Tratamiento.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-list-Tratamientos',
@@ -13,15 +14,18 @@ export class ListTratamientosComponent implements OnInit {
   tratamientos: any[] = [];
 
   constructor(private _tratamientoService: TratamientoService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.getTratamientos()
+    const id = this.route.snapshot.paramMap.get['id']
+    console.log(id)
+    this.getTratamientos(id)
   }
 
-  getTratamientos() {
-    this._tratamientoService.getTratamientos().subscribe(data => {
+  getTratamientos(id: string) {
+    this._tratamientoService.getTratamientosPaciente(id).subscribe(data => {
       this.tratamientos = [];
       data.forEach((element: any) => {
         this.tratamientos.push({

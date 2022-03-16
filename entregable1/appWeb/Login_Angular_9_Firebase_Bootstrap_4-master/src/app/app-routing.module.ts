@@ -64,6 +64,11 @@ const routes: Routes = [
       import('./create-recordatorio/create-recordatorio.module').then((m) => m.CreateRecordatorioModule),
   },
   {
+    path: 'list-tratamiento/:id',
+    loadChildren: () =>
+      import('./list-tratamiento/list-tratamiento.module').then((m) => m.ListTratamientosModule),
+  },
+  {
     path: 'list-tratamiento',
     loadChildren: () =>
       import('./list-tratamiento/list-tratamiento.module').then((m) => m.ListTratamientosModule),
