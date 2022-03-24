@@ -1,13 +1,17 @@
 <template>
 <div id="nav">
- <nav class="container navbar navbar-expand-lg navbar-light bg-light">
+ <nav class="container navbar navbar-expand-lg navbar-light bg-light" style="border-radius:20px">
     <a class="navbar-brand" href="#">
       <img src="../public/Captura.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
       RecordMed
     </a>
+      <div>
         <div class="navbar-nav ms-auto">
-            <router-link to="/Login" class="nav-item nav-link">Login</router-link>
-    </div>
+            <router-link class="btn btn-outline-secondary my-2 my-sm-0" style="border-radius:20px" to="/">Login</router-link>
+        </div>
+      </div>
+
+        
 </nav>
  </div>
   <router-view/>
@@ -18,8 +22,14 @@
   import { useRouter, useRoute} from 'vue-router';
   import firebase from 'firebase/compat/app';
   import 'firebase/compat/auth';
+import { mapGetters } from 'vuex';
 
   export default {
+    computed:{
+      ...mapGetters({
+        user: "user"
+      })
+    },
     setup(){
       const router = useRouter();
       const route = useRoute();
@@ -33,6 +43,18 @@
           }
         })
       })
+    },
+    methods:{
+      signOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.replace({
+            name: "home"
+          });
+        });
+    }
     }
   }
 </script>

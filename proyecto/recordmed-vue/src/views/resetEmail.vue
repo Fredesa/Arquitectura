@@ -34,6 +34,7 @@ export default {
             .auth()
             .sendPasswordResetEmail(email.value)
             .then(
+                window.alert('Se ha enviado al correo un link para reestablecer la contraseña.'),
                 router.replace('/login')
             )
             .catch(err => console.log(err));
