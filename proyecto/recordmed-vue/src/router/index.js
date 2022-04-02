@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/medico/HomeView.vue'
 
 const routes = [
   {
-    path: '/home',
+    path: '/medico',
     name: 'home',
     component: HomeView
   },
@@ -25,13 +25,43 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import('../views/adminView.vue')
+    component: () => import('../views/admin/adminView.vue')
   },
   {
-    path: '/tratamiento/:id',
+    path: '/medico/tratamiento/:id',
     name: 'tratamiento',
-    component: () => import('../views/tratamientoView.vue')
-  }
+    component: () => import('../views/medico/tratamientoView.vue')
+  },
+  {
+    path: '/admin/medicamentos',
+    name: 'medicamento',
+    component: () => import('../views/admin/medicamentoView.vue')
+  },
+  {
+    path: '/admin/medicos',
+    name: 'medico',
+    component: () => import('../views/admin/medicoView.vue')
+  },
+  {
+    path: '/admin/pacientes',
+    name: 'paciente',
+    component: () => import('../views/admin/usuarioView.vue')
+  },
+  {
+    path: '/admin/medicamentos/crear',
+    name: 'crearMedicamento',
+    component: () => import('../views/admin/createMedicamentoView.vue')
+  },
+  {
+    path: '/admin/medicos/crear',
+    name: 'crearMedico',
+    component: () => import('../views/admin/createMedicoView.vue')
+  },
+  {
+    path: '/admin/pacientes/crear',
+    name: 'crearPaciente',
+    component: () => import('../views/admin/createUsuarioView.vue')
+  },
 ]
 
 const router = createRouter({
