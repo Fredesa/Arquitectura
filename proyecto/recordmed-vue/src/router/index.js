@@ -58,9 +58,14 @@ const routes = [
     component: () => import('../views/admin/createMedicoView.vue')
   },
   {
-    path: '/admin/pacientes/crear',
+    path: '/admin/tratamiento/crear',
     name: 'crearPaciente',
     component: () => import('../views/admin/createUsuarioView.vue')
+  },
+  {
+    path: '/medico/tratamiento/crear/:id',
+    name: 'crearTratamiento',
+    component: () => import('../views/medico/createTratamientoView.vue')
   },
 ]
 

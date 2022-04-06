@@ -1,5 +1,5 @@
 <template>
-  <div class="tratamiento">
+  <div class="create-tratamiento">
     <div
       class="container"
       style="
@@ -13,24 +13,16 @@
         <div class="card-header">
           <ul class="nav nav-pills card-header-pills">
             <li class="nav-item">
-              <h1 style="color: black">Bienvenido</h1>
+              <h1 style="color: black">Tratamiento</h1>
             </li>
-            <li class="nav-item me-3 ms-auto">
+             <li class="nav-item me-3 ms-auto">
               <button
-                      @click.stop="crearTratamiento($route.params.id)"
+                      @click.stop="volver($route.params.id)"
                       class="btn btn-outline-secondary my-2 my-sm-0"
                       style="border-radius: 20px"
                     >
-                      Crear Tratamiento
+                     Volver
                     </button>
-              >
-            </li>
-            <li class="nav-item me-1">
-              <router-link
-                to="/medico"
-                class="btn btn-outline-secondary my-2 my-sm-1 float-right"
-                style="border-radius: 20px"
-                >Volver</router-link
               >
             </li>
           </ul>
@@ -48,8 +40,8 @@ import router from "@/router";
 export default {
   
   methods:{
-    crearTratamiento(id) {
-      router.push({ name: "crearTratamiento", params: { id } });
+    volver(id) {
+      router.push({ name: "tratamiento", params: { id } });
     },
   }
 };
