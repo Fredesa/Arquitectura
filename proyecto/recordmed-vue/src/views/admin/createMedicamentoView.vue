@@ -144,6 +144,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import router from "@/router";
 export default {
   methods: {
     async registrar() {
@@ -163,7 +164,11 @@ export default {
           formafarmaceutica: this.formafarmaceutica,
           unidadmedida: this.unidadmedida,
           viaadministracion: this.viaadministracion,
-        });
+        })
+        .then(
+          alert('El medicamento se ha crado con exito.'),
+          router.replace("/admin/medicamentos")
+        );
     },
   },
 };

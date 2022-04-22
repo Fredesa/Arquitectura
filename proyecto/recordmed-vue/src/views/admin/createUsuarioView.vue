@@ -69,18 +69,18 @@
             </div>
             <li></li>
             <div class="form-group">
-              <label for="idMedico" style="color: black"
-                >Identificacion del Medico</label
-              >
-              <input
-                type="number"
-                class="form-control"
-                id="idMedico"
-                placeholder="Ingresa el id del medico asociado"
-                style="text-align: center; border-radius: 20px"
-                v-model="idMedico"
-                required
-              />
+              <label for="medico" style="color: black">Medico</label>
+              <select v-model="idMedico" id="medico" class="form-control" style="text-align: center; border-radius: 20px">
+                <option
+                  class="form-control"
+                  style="text-align: center; border-radius: 20px"
+                  v-for="doctor in doctores"
+                  :key="doctor.id"
+                  v-bind:value="doctor.identificacion"
+                >
+                  {{ doctor.nombre }}
+                </option>
+              </select>
             </div>
             <li></li>
             <div class="form-group">
@@ -114,13 +114,28 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import router from "@/router";
 export default {
+  data() {
+    return {
+      doctores: [],
+      doctor: {
+        nombre: "",
+        id: "",
+        identificacion: "",
+        edad: "",
+      },
+    };
+  },
+  created() {
+    this.getDoctores();
+  },
   methods: {
     async registrar() {
-      const user = await firebase
+      const user = 
+      await firebase
         .auth()
         .createUserWithEmailAndPassword(this.correo, this.identificacion);
-      console.log(user.user.uid);
       await firebase.firestore().collection("usuarios").doc(user.user.uid).set({
         nombre: this.nombre,
         edad: this.edad,
@@ -129,6 +144,27 @@ export default {
         idMedico: this.idMedico,
         correo: this.correo,
       });
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword("admin@admin.com", "admin123")
+        .then(
+          alert("El usuario se ha creado correctamente"),
+          router.replace("/admin/pacientes")
+        );
+    },
+    async getDoctores() {
+      firebase
+        .firestore()
+        .collection("usuarios")
+        .where("rol", "==", "Medico")
+        .onSnapshot((snap) => {
+          this.doctores = [];
+          snap.forEach((doc) => {
+            var doctor = doc.data();
+            doctor.id = doc.id;
+            this.doctores.push(doctor);
+          });
+        });
     },
   },
 };

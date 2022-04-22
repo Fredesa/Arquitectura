@@ -34,6 +34,7 @@ dependencies:
   firebase_auth:
   provider:
   fluttertoast:
+  firebase_messaging: ^11.2.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

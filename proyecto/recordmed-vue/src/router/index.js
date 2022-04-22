@@ -58,7 +58,7 @@ const routes = [
     component: () => import('../views/admin/createMedicoView.vue')
   },
   {
-    path: '/admin/tratamiento/crear',
+    path: '/admin/pacientes/crear',
     name: 'crearPaciente',
     component: () => import('../views/admin/createUsuarioView.vue')
   },

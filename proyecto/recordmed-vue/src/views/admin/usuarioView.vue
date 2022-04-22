@@ -44,6 +44,7 @@
                   <th>Identificacion</th>
                   <th>Nombre</th>
                   <th>Edad</th>
+                  <th>Identificacion del Medico</th>
                 </tr>
               </thead>
               <tbody>
@@ -51,6 +52,7 @@
                   <td>{{ paciente.identificacion }}</td>
                   <td>{{ paciente.nombre }}</td>
                   <td>{{ paciente.edad }}</td>
+                  <td>{{paciente.idMedico}}</td>
                 </tr>
               </tbody>
             </table>
@@ -75,6 +77,7 @@ export default {
         id: "",
         identificacion: "",
         edad: "",
+        idMedico:"",
       },
     };
   },
@@ -86,6 +89,7 @@ export default {
       firebase
         .firestore()
         .collection("usuarios", (ref) => ref.where("rol", "==", "paciente"))
+        .where('rol','==','Paciente')
         .onSnapshot((snap) => {
           this.pacientes = [];
           snap.forEach((doc) => {

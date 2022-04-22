@@ -86,6 +86,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import router from "@/router";
 export default {
   methods: {
     async registrar() {
@@ -99,6 +100,13 @@ export default {
         rol: "Medico",
         correo: this.correo,
       });
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword("admin@admin.com", "admin123")
+        .then(
+          alert("El usuario se ha creado correctamente"),
+          router.replace("/admin/pacientes")
+        );
     },
   },
 };

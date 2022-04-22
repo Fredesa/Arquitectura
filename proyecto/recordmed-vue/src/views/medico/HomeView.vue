@@ -91,7 +91,8 @@ export default {
             id = snap.data()["identificacion"];
             firebase
               .firestore()
-              .collection("usuarios", (ref) => ref.where("idMedico", "==", id))
+              .collection("usuarios")
+              .where('idMedico','==',id)
               .onSnapshot((snap) => {
                 this.pacientes = [];
                 snap.forEach((doc) => {

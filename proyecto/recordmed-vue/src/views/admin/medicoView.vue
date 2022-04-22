@@ -83,7 +83,8 @@ export default {
     async getPacientes() {
       firebase
         .firestore()
-        .collection("usuarios", (ref) => ref.where("rol", "==", "Medico"))
+        .collection("usuarios")
+        .where('rol','==','Medico')
         .onSnapshot((snap) => {
           this.pacientes = [];
           snap.forEach((doc) => {
