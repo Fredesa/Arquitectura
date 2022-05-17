@@ -17,12 +17,12 @@
             </li>
             <li class="nav-item me-3 ms-auto">
               <button
-                      @click.stop="crearTratamiento($route.params.id)"
-                      class="btn btn-outline-secondary my-2 my-sm-0"
-                      style="border-radius: 20px"
-                    >
-                      Crear Tratamiento
-                    </button>
+                @click.stop="crearTratamiento($route.params.id)"
+                class="btn btn-outline-secondary my-2 my-sm-0"
+                style="border-radius: 20px"
+              >
+                Crear Tratamiento
+              </button>
               >
             </li>
             <li class="nav-item me-1">
@@ -45,12 +45,28 @@
 
 <script>
 import router from "@/router";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
 export default {
-  
-  methods:{
+  methods: {
     crearTratamiento(id) {
       router.push({ name: "crearTratamiento", params: { id } });
     },
+    getUsuario(id) {
+        firebase
+          .firestore()
+          .collection("usuarios")
+          .doc(id)
+          .get()
+          .then((doc) => {
+            console.log(doc.data());
+          });
+      },
+  },
+  created(){
+    this.getUsuario(this.$route.params.id)
   }
 };
 </script>
