@@ -21,7 +21,7 @@ export class LoginComponent {
     try {
       const user = await this.authSvc.login(email, password);
       if (user) {
-        if (user.uid == "185s8zyv06a5VmwgXVKY5z5eiAn1"){
+        if (user.uid == "W8930eacw6dYAlt0FlCATBwZdxx1"){
           this.router.navigate(['/home2'])
         }else{
           this.router.navigate(['/list-user2'])

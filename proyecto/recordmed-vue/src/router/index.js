@@ -67,6 +67,11 @@ const routes = [
     name: 'crearTratamiento',
     component: () => import('../views/medico/createTratamientoView.vue')
   },
+  {
+    path: '/medico/tratamiento/detalle/:id',
+    name: 'tratamientoDetail',
+    component: () => import('../views/medico/tratamientoDetailView.vue')
+  },
 ]
 
 const router = createRouter({

@@ -30,7 +30,7 @@ export class CreateTratamientoComponent implements OnInit {
       Dosis:['',Validators.required],
       fechaInicio: ['', Validators.required],
       fechaFin: ['', Validators.required],
-    
+
 
     })
     this.id = this.aRoute.snapshot.paramMap.get('id');
@@ -55,7 +55,7 @@ export class CreateTratamientoComponent implements OnInit {
     }
 
   }
-  
+
   agregarTratamiento() {
     const tratamiento: any = {
       nombre: this.createTratamiento.value.nombre,
@@ -63,7 +63,7 @@ export class CreateTratamientoComponent implements OnInit {
       idPaciente: this.createTratamiento.value.idPaciente,
       tipoAdministracion: this.createTratamiento.value.tipoAdministracion,
       Dosis: this.createTratamiento.value.Dosis,
-      fechaInicio: firebase.f  (new Date(this.createTratamiento.value.fechaInicio)).getTime(),
+      fechaInicio:  (new Date(this.createTratamiento.value.fechaInicio)).getTime(),
       fechaFin: (new Date(this.createTratamiento.value.fechaFin)).getTime(),
     }
     this.loading = true;

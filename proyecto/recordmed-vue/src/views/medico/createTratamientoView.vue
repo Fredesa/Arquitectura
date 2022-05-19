@@ -9,7 +9,10 @@
         min-height: 90vh;
       "
     >
-      <div class="card text-center" style="width: 40rem; border-radius: 20px">
+      <div
+        class="card text-center justify-center"
+        style="width: 35rem; border-radius: 20px; height: 50rem"
+      >
         <div class="card-header">
           <ul class="nav nav-pills card-header-pills">
             <li class="nav-item">
@@ -17,7 +20,7 @@
             </li>
             <li class="nav-item me-3 ms-auto">
               <button
-                @click.stop="volver($route.params.id)"
+                @click.stop="volver()"
                 class="btn btn-outline-secondary my-2 my-sm-0"
                 style="border-radius: 20px"
               >
@@ -28,6 +31,22 @@
           </ul>
         </div>
         <div class="card-body">
+            <div class="form-group">
+              <label for="nombre" style="color: black"
+                >Nombre del Tratamiento</label
+              >
+              <input
+                type="text"
+                align="center"
+                class="form-control"
+                id="nombreTratamiento"
+                placeholder="Ingresa el nombre del usuario"
+                style="text-align: center; border-radius: 20px; width: 20rem"
+                v-model="nombreTratamiento"
+                required
+              />
+            </div>
+            <li></li>
             <table>
               <thead>
                 <th style="color: black">Medicamento</th>
@@ -82,6 +101,7 @@
                     <div class="form-group">
                       <input
                         v-model="tiempo"
+                        class="form-control"
                         id="tiempo"
                         style="
                           text-align: center;
@@ -108,39 +128,45 @@
               </tbody>
             </table>
 
-        </div>
-        <div
-          class="table-responsive table-wrapper-scroll-y my-custom-scrollbar"
-        >
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nombre del Medicamento</th>
-                <th>Cantidad</th>
-                <th>Tiempo entre medicamento</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(medicamento, index) in this.Medicamentos1"
-                :key="medicamento.id"
-              >
-                <td>
-                  {{ medicamento.nombre }}
-                </td>
-                <td>
-                  {{ Medicamentos2[index].cantidad }}
-                </td>
-                <td>
-                  {{ Medicamentos2[index].tiempo }}
-                </td>
-              </tr>
-
-              <p>Tiempo {{ tiempo }}</p>
-              <p>Cantidad {{ cantidad }}</p>
-              <p>Array {{ Medicamentos2 }}</p>
-            </tbody>
-          </table>
+            <div
+              class="
+                table-responsive table-wrapper-scroll-y
+                my-custom-scrollbar
+              "
+            >
+              <table class="table" style="height: 22rem">
+                <thead>
+                  <tr>
+                    <th>Nombre del Medicamento</th>
+                    <th>Cantidad</th>
+                    <th>Tiempo entre medicamento</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(medicamento, index) in this.Medicamentos1"
+                    :key="medicamento.id"
+                  >
+                    <td>
+                      {{ medicamento.nombre }}
+                    </td>
+                    <td>
+                      {{ Medicamentos2[index].cantidad }}
+                    </td>
+                    <td>
+                      {{ Medicamentos2[index].tiempo }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button
+              @click="registrarTratamiento"
+              class="btn btn-outline-secondary"
+              style="border-radius: 20px"
+            >
+              Registrar Tratamiento
+            </button>
         </div>
       </div>
     </div>
@@ -161,6 +187,7 @@ export default {
       cantidad: "",
       value: null,
       valor: [],
+      nombreTratamiento: "",
       Medicamentos2: [],
       Medicamentos1: [],
       Medicamentos: [],
@@ -180,8 +207,8 @@ export default {
     console.log(this.Medicamentos2);
   },
   methods: {
-    volver(id) {
-      router.push({ name: "tratamiento", params: { id } });
+    volver() {
+      router.push({ name: "tratamiento", params: this.$route.params.id });
     },
     async getMedicamentos() {
       firebase
@@ -211,9 +238,31 @@ export default {
     getMedicamento2(id, cantidad, tiempo) {
       this.Medicamentos2.push({ id, cantidad, tiempo });
     },
+    async registrarTratamiento() {
+      firebase
+        .firestore()
+        .collection("usuarios")
+        .doc(this.$route.params.id)
+        .collection("tratamientos")
+        .doc(this.nombreTratamiento)
+        .set({
+          medicamentos: this.Medicamentos2,
+        })
+        .then(
+          alert("Se ha registrado correctamente el Tratamiento"),
+          router.push({ name: "tratamiento", params: this.$route.params.id })
+        );
+    },
   },
 };
 </script>
-<style src="@vueform/multiselect/themes/default.css"></style>
-<style>
+<style src="@vueform/multiselect/themes/default.css">
+.my-custom-scrollbar {
+  position: relative;
+  height: 20rem;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
+}
 </style>
